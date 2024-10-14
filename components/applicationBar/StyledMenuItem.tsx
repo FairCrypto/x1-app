@@ -4,15 +4,11 @@ import React from 'react';
 
 import type { LinkTabProps } from '@/config/types';
 
-// import Link from '../Link';
-
 export const StyledMenuItem = ({
-  props,
   item,
   isCurrent,
   onClick
 }: {
-  props: LinkTabProps;
   item: LinkTabProps;
   isCurrent: boolean;
   onClick: any;
@@ -25,7 +21,7 @@ export const StyledMenuItem = ({
     onClick={onClick}
     sx={{
       textTransform: 'initial',
-      color: isCurrent ? props.theme.palette.text.primary : props.theme.palette.text.secondary,
+      color: isCurrent ? 'text.primary' : 'text.secondary',
       fontSize: '13pt',
       fontWeight: isCurrent ? '900' : '600'
     }}

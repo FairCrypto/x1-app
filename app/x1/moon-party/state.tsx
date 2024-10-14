@@ -112,7 +112,13 @@ const State = () => {
         {}
       );
       setXenfts(aggregated);
-      console.log('aggregated', aggregated, tokenInfos);
+      console.log(
+        'aggregated',
+        aggregated,
+        JSON.stringify(Object.entries(tokenInfos), (_key, value) =>
+          typeof value === 'bigint' ? `${value.toString()}n` : value
+        )
+      );
     } else {
       setXenfts({});
     }
@@ -120,7 +126,9 @@ const State = () => {
     chain,
     torrent,
     JSON.stringify(mintedTokens.map(_ => _.toString())),
-    JSON.stringify(Object.entries(tokenInfos).map(([k, v]) => `${k}:${v.toString()}`))
+    JSON.stringify(Object.entries(tokenInfos), (_key, value) =>
+      typeof value === 'bigint' ? `${value.toString()}n` : value
+    )
   ]);
 
   const rows = [

@@ -4,8 +4,6 @@ import React from 'react';
 
 import type { LinkTabProps } from '@/config/types';
 
-// import Link from '../Link';
-
 export const StyledButton = ({
   props,
   is_current
@@ -26,7 +24,7 @@ export const StyledButton = ({
       width: { xs: '100%', lg: 'auto' },
       justifyContent: 'start',
       textTransform: 'initial',
-      color: is_current ? props.theme.palette.text.primary : props.theme.palette.text.secondary,
+      color: is_current ? 'text.primary' : 'text.secondary',
       fontSize: '13pt',
       fontWeight: is_current ? '900' : '600'
     }}

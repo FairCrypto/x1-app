@@ -2,7 +2,11 @@ import type { ThemeOptions } from '@mui/material';
 
 export const defaultTheme: ThemeOptions = {
   palette: {
-    mode: 'dark'
+    mode: 'dark',
+    text: {
+      primary: '#fff',
+      secondary: '#ccc'
+    }
   },
   breakpoints: {
     values: {
@@ -14,12 +18,7 @@ export const defaultTheme: ThemeOptions = {
     }
   },
   typography: {
-    fontFamily: [
-      'Noto Sans',
-      // 'Source Sans Pro',
-      'Arial',
-      'sans-serif'
-    ].join(','),
+    fontFamily: ['Noto Sans', 'Arial', 'sans-serif'].join(','),
     fontWeightRegular: 500,
     fontSize: 16
   }
@@ -28,6 +27,12 @@ export const defaultTheme: ThemeOptions = {
 export const overrides = (mode: string) =>
   mode === 'light'
     ? {
+        palette: {
+          text: {
+            primary: '#000',
+            secondary: '#333'
+          }
+        },
         components: {
           MuiPaper: {
             styleOverrides: {

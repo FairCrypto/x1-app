@@ -42,7 +42,7 @@ export const LinkTab = (props: LinkTabProps) => {
             onClick={handleMenuClick(props.label)}
             sx={{
               textTransform: 'initial',
-              color: isCurrent ? 'palette.text.primary' : 'palette.text.secondary',
+              color: isCurrent ? 'text.primary' : 'text.secondary',
               fontSize: '13pt',
               fontWeight: isCurrent ? '900' : '600'
             }}
@@ -69,7 +69,6 @@ export const LinkTab = (props: LinkTabProps) => {
                 >
                   {items?.map(item => (
                     <StyledMenuItem
-                      props={props}
                       key={item.label}
                       item={item}
                       onClick={handleMenuClick(props.label)}
