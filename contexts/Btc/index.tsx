@@ -1,12 +1,13 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 
-import type { TBRCAsset, TInscription } from '@/components/btc/types';
 import { ThemeContext } from '@/contexts/Theme';
 import { useInscriptions } from '@/hooks/useInscriptions';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { useUnisat } from '@/hooks/useUnisat';
 import { useXverse } from '@/hooks/useXverse';
 import { dedupeArray } from '@/shared/dedupeArray';
+
+import type { TBRCAsset, TInscription } from './types';
 
 export type TBtcContext = {
   preferredWallet: string | undefined;
@@ -135,7 +136,7 @@ export const BtcProvider = ({ children }) => {
   const fetchNextPage = async ({ page }: { page: number }) => {
     if (page * safeRows > total) return;
     setOffset(page * safeRows);
-    unisat.getInscriptions(page * safeRows, safeRows).then(aa => {
+    unisat?.getInscriptions(page * safeRows, safeRows).then(aa => {
       console.log('fetching next page', page, aa.list);
       setAssets(current => dedupeArray([...current, ...aa.list], 'inscriptionId'));
     });
@@ -167,7 +168,7 @@ export const BtcProvider = ({ children }) => {
     const batches = Math.ceil(total / batchSize);
     // eslint-disable-next-line no-restricted-syntax
     for await (const i of Array(batches).keys()) {
-      const aa = await unisat.getInscriptions(i * batchSize, batchSize);
+      const aa = await unisat?.getInscriptions(i * batchSize, batchSize);
       setAssets(current => dedupeArray([...current, ...aa.list], 'inscriptionId'));
     }
   };
@@ -197,7 +198,7 @@ export const BtcProvider = ({ children }) => {
         xverseAvailable,
         connected,
         balance,
-        accounts,
+        accounts: accounts || [],
         assets,
         data,
         total,

@@ -1,5 +1,5 @@
-import { verifyMessage } from '@ethersproject/wallet';
 import { createContext, useContext, useEffect, useState } from 'react';
+import { verifyMessage } from 'viem';
 import { useAccount, useWalletClient } from 'wagmi';
 
 import networks from '@/config/networks';
@@ -30,16 +30,14 @@ export const ConsentProvider = ({ children }) => {
     if (networkId && address) {
       const key = `${networkId}-${address}`;
       try {
-        const signature = localStorage.getItem(key);
+        const signature = localStorage.getItem(key) as any;
         if (signature) {
           return await fetch('/terms_short.txt')
             .then(res => (res.ok ? res.text() : Promise.reject(res.status)))
-            .then(terms => verifyMessage(terms, signature))
-            .then(signerAccount => {
-              setTermsAccepted(
-                !!signerAccount && signerAccount?.toLowerCase() === address?.toLowerCase()
-              );
-              return signerAccount === address;
+            .then(terms => verifyMessage({ message: terms, signature, address }))
+            .then(result => {
+              setTermsAccepted(result);
+              return result;
             })
             .catch(e => {
               setTermsAccepted(false);

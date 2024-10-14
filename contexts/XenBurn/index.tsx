@@ -1,10 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import {
-  useAccount,
-  useContractInfiniteReads,
-  useContractRead,
-  useContractReads,
-} from 'wagmi';
+import { useAccount, useContractInfiniteReads, useContractRead, useContractReads } from 'wagmi';
 
 import { publicRuntimeConfig } from '@/config/runtimeConfig';
 import { ThemeContext } from '@/contexts/Theme';

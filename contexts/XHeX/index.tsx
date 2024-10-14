@@ -1,6 +1,6 @@
 import { createContext, useState } from 'react';
-import type { Chain } from 'wagmi/chains';
 import { useAccount, useContractRead, useContractReads } from 'wagmi';
+import type { Chain } from 'wagmi/chains';
 
 import { publicRuntimeConfig } from '@/config/runtimeConfig';
 import type { TAddress } from '@/contexts/types';

@@ -1,19 +1,14 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import type { Chain } from 'wagmi';
-import {
-  useAccount,
-  useContractInfiniteReads,
-  useContractRead,
-  useContractReads,
-} from 'wagmi';
+import { useAccount, useContractInfiniteReads, useContractRead, useContractReads } from 'wagmi';
 
+import { paginatedIndexesConfig } from '@/components/wagmi-upgrade/tools';
 import { publicRuntimeConfig } from '@/config/runtimeConfig';
 import { ThemeContext } from '@/contexts/Theme';
 import type { TAddress } from '@/contexts/types';
 import type { TXEth, TXEthContext, TXEthUser } from '@/contexts/XEth/types';
 
 import networks from '../../config/networks';
-import { paginatedIndexesConfig } from '@/components/wagmi-upgrade/tools';
 
 const supportedNetworks = networks({ config: publicRuntimeConfig });
 const { xenCryptoABI: contractABI, xEthABI } = publicRuntimeConfig;

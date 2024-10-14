@@ -3,9 +3,10 @@ import {
   useAccount,
   useContractInfiniteReads,
   // useContractRead,
-  useContractReads,
+  useContractReads
 } from 'wagmi';
 
+import { paginatedIndexesConfig } from '@/components/wagmi-upgrade/tools';
 // import {readContract} from "@wagmi/core";
 // import {keccak256} from "viem";
 import { publicRuntimeConfig } from '@/config/runtimeConfig';
@@ -13,7 +14,6 @@ import type { TAddress } from '@/contexts/types';
 
 import networks from '../../config/networks';
 import type { TTokenInfo, TXenTokenizerContext } from './types';
-import { paginatedIndexesConfig } from '@/components/wagmi-upgrade/tools';
 
 const supportedNetworks = networks({ config: publicRuntimeConfig });
 const {

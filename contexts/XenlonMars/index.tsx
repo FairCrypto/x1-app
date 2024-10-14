@@ -4,7 +4,7 @@ import {
   useAccount,
   useContractInfiniteReads,
   useContractRead,
-  useContractReads,
+  useContractReads
 } from 'wagmi';
 
 import { publicRuntimeConfig } from '@/config/runtimeConfig';

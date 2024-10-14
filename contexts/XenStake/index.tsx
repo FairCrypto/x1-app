@@ -1,18 +1,13 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import {
-  useAccount,
-  useContractInfiniteReads,
-  useContractRead,
-  useContractReads,
-} from 'wagmi';
+import { useAccount, useContractInfiniteReads, useContractRead, useContractReads } from 'wagmi';
 
+import { paginatedIndexesConfig } from '@/components/wagmi-upgrade/tools';
 import { publicRuntimeConfig } from '@/config/runtimeConfig';
 import { ThemeContext } from '@/contexts/Theme';
 
 import networks from '../../config/networks';
 import { decodeURI, decodeXeNFTStakeInfo } from './decoders';
 import type { TXenStakeContext } from './types';
-import { paginatedIndexesConfig } from '@/components/wagmi-upgrade/tools';
 
 const supportedNetworks = networks({ config: publicRuntimeConfig });
 const contractABI = publicRuntimeConfig.xenCryptoABI;
