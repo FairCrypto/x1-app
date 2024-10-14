@@ -30,9 +30,9 @@ export const DBXenProvider = ({ children }) => {
   const [user, setUser] = useState({});
   const { address, chain } = useAccount();
 
-  const currentStartedCycle = global[chain?.id]?.currentStartedCycle;
-  const firstStakeCycle = user[chain?.id]?.[address]?.firstStakeCycle;
-  const secondStakeCycle = user[chain?.id]?.[address]?.secondStakeCycle;
+  const currentStartedCycle = global[chain?.id as number]?.currentStartedCycle;
+  const firstStakeCycle = user[chain?.id as number]?.[address as `0x${string}`]?.firstStakeCycle;
+  const secondStakeCycle = user[chain?.id as number]?.[address as `0x${string}`]?.secondStakeCycle;
 
   const xenCryptoContract = chain => ({
     address: Object.values(supportedNetworks).find(n => Number(n?.chainId) === chain?.id)
@@ -97,8 +97,8 @@ export const DBXenProvider = ({ children }) => {
       ] = init;
       setGlobal(g => ({
         ...g,
-        [chain?.id]: {
-          ...g?.[chain?.id],
+        [chain?.id as number]: {
+          ...g?.[chain?.id as number],
           maxBPS,
           scalingFactor,
           xenBatchAmount,
@@ -117,7 +117,7 @@ export const DBXenProvider = ({ children }) => {
         }
       }));
     }
-  });
+  } as any);
 
   const { refetch: refetchUserState } = useContractReads({
     contracts: [
@@ -125,61 +125,61 @@ export const DBXenProvider = ({ children }) => {
         ...dbXenContract(chain),
         functionName: 'accCycleBatchesBurned',
         chainId: chain?.id,
-        args: [address]
+        args: [address as `0x${string}`]
       },
       {
         ...dbXenViewsContract(chain),
         functionName: 'getUnclaimedFees',
         chainId: chain?.id,
-        args: [address]
+        args: [address as `0x${string}`]
       },
       {
         ...dbXenContract(chain),
         functionName: 'accFirstStake',
         chainId: chain?.id,
-        args: [address]
+        args: [address as `0x${string}`]
       },
       {
         ...dbXenContract(chain),
         functionName: 'accSecondStake',
         chainId: chain?.id,
-        args: [address]
+        args: [address as `0x${string}`]
       },
       {
         ...dbXenContract(chain),
         functionName: 'accFirstStake',
         chainId: chain?.id,
-        args: [address]
+        args: [address as `0x${string}`]
       },
       {
         ...dbXenViewsContract(chain),
         functionName: 'getUnclaimedRewards',
         chainId: chain?.id,
-        args: [address]
+        args: [address as `0x${string}`]
       },
       {
         ...dbXenContract(chain),
         functionName: 'accSecondStake',
         chainId: chain?.id,
-        args: [address]
+        args: [address as `0x${string}`]
       },
       {
         ...dbXenViewsContract(chain),
         functionName: 'getAccWithdrawableStake',
         chainId: chain?.id,
-        args: [address]
+        args: [address as `0x${string}`]
       },
       {
         ...dbXenContract(chain),
         functionName: 'lastActiveCycle',
         chainId: chain?.id,
-        args: [address]
+        args: [address as `0x${string}`]
       },
       {
         ...dbXenContract(chain),
         functionName: 'lastFeeUpdateCycle',
         chainId: chain?.id,
-        args: [address]
+        args: [address as `0x${string}`]
       }
     ],
     onSuccess: init => {
@@ -197,10 +197,10 @@ export const DBXenProvider = ({ children }) => {
       ] = init;
       setUser(g => ({
         ...g,
-        [chain?.id]: {
-          ...g?.[chain?.id],
-          [address]: {
-            ...g?.[chain?.id]?.[address],
+        [chain?.id as number]: {
+          ...g?.[chain?.id as number],
+          [address as `0x${string}`]: {
+            ...g?.[chain?.id as number]?.[address as `0x${string}`],
             accCycleBatchesBurned,
             accAccruedFees,
             firstStakeCycle,
@@ -215,7 +215,7 @@ export const DBXenProvider = ({ children }) => {
         }
       }));
     }
-  });
+  } as any);
 
   const { isFetching: isFetchingStakeInfo, refetch: refetchStakeInfo } = useContractReads({
     contracts: [
@@ -246,24 +246,24 @@ export const DBXenProvider = ({ children }) => {
       ] = init;
       setGlobal(g => ({
         ...g,
-        [chain?.id]: {
-          ...g?.[chain?.id],
+        [chain?.id as number]: {
+          ...g?.[chain?.id as number],
           cycleTotalBatchesBurned
         }
       }));
       setUser(g => ({
         ...g,
-        [chain?.id]: {
-          ...g?.[chain?.id],
-          [address]: {
-            ...g?.[chain?.id]?.[address],
+        [chain?.id as number]: {
+          ...g?.[chain?.id as number],
+          [address as `0x${string}`]: {
+            ...g?.[chain?.id as number]?.[address as `0x${string}`],
             firstStakeCycleAmount,
             secondStakeCycleAmount
           }
         }
       }));
     }
-  });
+  } as any);
 
   useEffect(() => {
     if (currentStartedCycle) {
@@ -284,22 +284,22 @@ export const DBXenProvider = ({ children }) => {
   const { refetch: refetchUserBalance } = useContractRead({
     ...dxnTokenContract(chain),
     functionName: 'balanceOf',
-    args: [address],
+    args: [address as `0x${string}`],
     account: address,
     chainId: chain?.id,
     onSuccess: balance => {
       setUser(g => ({
         ...g,
-        [chain?.id]: {
-          ...g?.[chain?.id],
-          [address]: {
-            ...g?.[chain?.id]?.[address],
+        [chain?.id as number]: {
+          ...g?.[chain?.id as number],
+          [address as `0x${string}`]: {
+            ...g?.[chain?.id as number]?.[address as `0x${string}`],
             balance
           }
         }
       }));
     }
-  });
+  } as any);
 
   const { refetch: refetchAllowance } = useContractRead({
     ...xenCryptoContract(chain),
@@ -310,16 +310,16 @@ export const DBXenProvider = ({ children }) => {
     onSuccess: allowance => {
       setUser(g => ({
         ...g,
-        [chain?.id]: {
-          ...g?.[chain?.id],
-          [address]: {
-            ...g?.[chain?.id]?.[address],
+        [chain?.id as number]: {
+          ...g?.[chain?.id as number],
+          [address as `0x${string}`]: {
+            ...g?.[chain?.id as number]?.[address as `0x${string}`],
             allowance
           }
         }
       }));
     }
-  });
+  } as any);
 
   const { refetch: refetchDXNAllowance } = useContractRead({
     ...dxnTokenContract(chain),
@@ -330,16 +330,16 @@ export const DBXenProvider = ({ children }) => {
     onSuccess: allowanceDXN => {
       setUser(g => ({
         ...g,
-        [chain?.id]: {
-          ...g?.[chain?.id],
-          [address]: {
-            ...g?.[chain?.id]?.[address],
+        [chain?.id as number]: {
+          ...g?.[chain?.id as number],
+          [address as `0x${string}`]: {
+            ...g?.[chain?.id as number]?.[address as `0x${string}`],
             allowanceDXN
           }
         }
       }));
     }
-  });
+  } as any);
 
   return (
     <DBXenContext.Provider

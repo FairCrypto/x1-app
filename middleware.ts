@@ -30,7 +30,7 @@ export async function middleware(request: NextRequest) {
   }
    */
 
-  if (request.nextUrl.pathname.startsWith('/api/x1')) {
+  if (request.nextUrl.pathname.startsWith('/api/x1') && process.env.X1_RPC_URL) {
     const body = await request.json();
     return fetch(process.env.X1_RPC_URL, {
       method: 'POST',

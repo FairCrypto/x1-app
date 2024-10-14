@@ -1,9 +1,8 @@
-import type { Chain } from 'wagmi';
+import type { Chain } from 'wagmi/chains';
 
 export const ethPow = {
   id: 10001,
   name: 'Ethereum PoW',
-  network: 'ethpow',
   nativeCurrency: {
     decimals: 18,
     name: 'ETHW',

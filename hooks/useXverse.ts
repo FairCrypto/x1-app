@@ -1,13 +1,5 @@
-import type {
-  Provider
-  // createInscription, sendBtcTransaction, signMessage, Provider
-} from '@sats-connect/core';
-import {
-  AddressPurpose,
-  getProviders,
-  request
-  // createInscription, sendBtcTransaction, signMessage, Provider
-} from '@sats-connect/core';
+import type { Provider } from '@sats-connect/core';
+import { AddressPurpose, getProviders, request } from '@sats-connect/core';
 import { useEffect, useState } from 'react';
 
 import { useLocalStorage } from '@/hooks/useLocalStorage';
@@ -15,7 +7,7 @@ import { useLocalStorage } from '@/hooks/useLocalStorage';
 export const useXverse = () => {
   const [available, setAvailable] = useState(false);
   const [connected, setConnected] = useState(false);
-  const [accounts, setAccounts] = useLocalStorage('xverse-accounts', null);
+  const [accounts, setAccounts] = useLocalStorage<string>('xverse-accounts', '');
   useEffect(() => {
     if (typeof window !== 'undefined' && !available) {
       const providers: Provider[] = getProviders();

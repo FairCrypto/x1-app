@@ -71,29 +71,29 @@ export const XenStakeProvider = ({ children }) => {
       setUserTokens([...(ownedTokens as bigint[]).sort(ascending)]);
       setUser(g => ({
         ...g,
-        [chain?.id]: {
-          ...g?.[chain?.id],
-          [address]: {
-            ...g?.[chain?.id]?.[address],
+        [chain?.id as number]: {
+          ...g?.[chain?.id as number],
+          [address as `0x${string}`]: {
+            ...g?.[chain?.id as number]?.[address as `0x${string}`],
             // eslint-disable-next-line no-return-assign,no-sequences
             ownedTokens
           }
         }
       }));
     }
-  });
+  } as any);
 
   useEffect(() => {
     setUser(g => ({
       ...g,
-      [chain?.id]: {
-        ...g?.[chain?.id],
-        [address]: {
-          ...g?.[chain?.id]?.[address],
+      [chain?.id as number]: {
+        ...g?.[chain?.id as number],
+        [address as `0x${string}`]: {
+          ...g?.[chain?.id as number]?.[address as `0x${string}`],
           // eslint-disable-next-line no-return-assign,no-sequences
           tokens: userTokens.reduce((res, e) => {
             res[Number(e)] = {
-              ...g?.[chain?.id]?.[address]?.tokens?.[Number(e)]
+              ...g?.[chain?.id as number]?.[address as `0x${string}`]?.tokens?.[Number(e)]
             };
             return res;
           }, {})
@@ -111,34 +111,34 @@ export const XenStakeProvider = ({ children }) => {
       const [{ result: genesisTs }, { result: tokenIdCounter }] = init;
       setGlobal(g => ({
         ...g,
-        [chain?.id]: {
-          ...g?.[chain?.id],
+        [chain?.id as number]: {
+          ...g?.[chain?.id as number],
           genesisTs,
           tokenIdCounter
         }
       }));
     }
-  });
+  } as any);
 
   useContractRead({
     ...xenStakeContract(chain),
     functionName: 'balanceOf',
-    args: [address],
+    args: [address as `0x${string}`],
     account: address,
     chainId: chain?.id,
     onSuccess: balance => {
       setUser(g => ({
         ...g,
-        [chain?.id]: {
-          ...g?.[chain?.id],
-          [address]: {
-            ...g?.[chain?.id]?.[address],
+        [chain?.id as number]: {
+          ...g?.[chain?.id as number],
+          [address as `0x${string}`]: {
+            ...g?.[chain?.id as number]?.[address as `0x${string}`],
             balance
           }
         }
       }));
     }
-  });
+  } as any);
 
   const { refetch: refetchAllowance } = useContractRead({
     ...xenContract(chain),
@@ -149,18 +149,18 @@ export const XenStakeProvider = ({ children }) => {
     onSuccess: allowance => {
       setUser(g => ({
         ...g,
-        [chain?.id]: {
-          ...g?.[chain?.id],
-          [address]: {
-            ...g?.[chain?.id]?.[address],
+        [chain?.id as number]: {
+          ...g?.[chain?.id as number],
+          [address as `0x${string}`]: {
+            ...g?.[chain?.id as number]?.[address as `0x${string}`],
             allowance
           }
         }
       }));
     }
-  });
+  } as any);
 
-  // const tokenIds = user[chain?.id]?.[address]?.userTokens || [];
+  // const tokenIds = user[chain?.id as number]?.[address as `0x${string}`]?.userTokens || [];
 
   const toHexString = (n: bigint) => n.toString(16).padStart(64, '0');
 
@@ -182,7 +182,7 @@ export const XenStakeProvider = ({ children }) => {
     cacheKey: `xenStakeInfo:${chain?.id}:${address}`,
     enabled: false,
     ...paginatedIndexesConfig(
-      (index: number) => {
+      ((index: number) => {
         if (data?.[index]) {
           const tokenId = data[index];
           return [
@@ -203,7 +203,7 @@ export const XenStakeProvider = ({ children }) => {
           ];
         }
         return null;
-      },
+      }) as any,
       { start: 0, perPage, direction: 'increment' }
     ),
     onSuccess: data => {
@@ -216,14 +216,16 @@ export const XenStakeProvider = ({ children }) => {
       for (const info of tokenInfos) {
         setUser(g => ({
           ...g,
-          [chain?.id]: {
-            ...g?.[chain?.id],
-            [address]: {
-              ...g?.[chain?.id]?.[address],
+          [chain?.id as number]: {
+            ...g?.[chain?.id as number],
+            [address as `0x${string}`]: {
+              ...g?.[chain?.id as number]?.[address as `0x${string}`],
               tokens: {
-                ...g?.[chain?.id]?.[address]?.tokens,
+                ...g?.[chain?.id as number]?.[address as `0x${string}`]?.tokens,
                 [Number(info?.tokenId)]: {
-                  ...g?.[chain?.id]?.[address]?.tokens?.[Number(info?.tokenId)],
+                  ...g?.[chain?.id as number]?.[address as `0x${string}`]?.tokens?.[
+                    Number(info?.tokenId)
+                  ],
                   ...info
                 }
               }
@@ -232,11 +234,11 @@ export const XenStakeProvider = ({ children }) => {
         }));
       }
     }
-  });
+  } as any);
 
   useEffect(() => {
     if (userTokens.length > 0) {
-      fetchNextPage({ pageParam: 0 }).then(_ => {});
+      fetchNextPage({ pageParam: 0 } as any).then(_ => {});
     }
   }, [userTokens]);
 

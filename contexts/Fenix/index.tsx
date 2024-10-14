@@ -59,8 +59,8 @@ export const FenixProvider = ({ children }) => {
       ] = init;
       setGlobal(g => ({
         ...g,
-        [chain?.id]: {
-          ...g?.[chain?.id],
+        [chain?.id as number]: {
+          ...g?.[chain?.id as number],
           genesisTs,
           cooldownUnlockTs,
           xenBurnRatio,
@@ -71,27 +71,27 @@ export const FenixProvider = ({ children }) => {
         }
       }));
     }
-  });
+  } as any);
 
   const { refetch: refetchUserBalance } = useContractRead({
     ...fenixContract(chain),
     functionName: 'balanceOf',
-    args: [address],
+    args: [address as `0x${string}`],
     account: address,
     chainId: chain?.id,
     onSuccess: balance => {
       setUser(g => ({
         ...g,
-        [chain?.id]: {
-          ...g?.[chain?.id],
-          [address]: {
-            ...g?.[chain?.id]?.[address],
+        [chain?.id as number]: {
+          ...g?.[chain?.id as number],
+          [address as `0x${string}`]: {
+            ...g?.[chain?.id as number]?.[address as `0x${string}`],
             balance
           }
         }
       }));
     }
-  });
+  } as any);
 
   const { refetch: refetchAllowance } = useContractRead({
     ...xenCryptoContract(chain),
@@ -102,16 +102,16 @@ export const FenixProvider = ({ children }) => {
     onSuccess: allowance => {
       setUser(g => ({
         ...g,
-        [chain?.id]: {
-          ...g?.[chain?.id],
-          [address]: {
-            ...g?.[chain?.id]?.[address],
+        [chain?.id as number]: {
+          ...g?.[chain?.id as number],
+          [address as `0x${string}`]: {
+            ...g?.[chain?.id as number]?.[address as `0x${string}`],
             allowance
           }
         }
       }));
     }
-  });
+  } as any);
 
   return (
     <FenixContext.Provider

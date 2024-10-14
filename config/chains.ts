@@ -26,11 +26,7 @@ import {
   sepolia
 } from 'viem/chains';
 
-import { x1Fastnet } from '@/config/chains/x1Fastnet';
-import { x1Testnet } from '@/config/chains/x1Testnet';
-
 import { ethPow } from './chains/ethPow';
-import { x1Devnet } from './chains/x1Devnet';
 
 export const chains = [
   // mainnets
@@ -60,9 +56,5 @@ export const chains = [
   pulsechainV4,
   arbitrumGoerli,
   optimismGoerli,
-  baseGoerli,
-  // X1 chains
-  x1Devnet,
-  x1Fastnet,
-  x1Testnet
+  baseGoerli
 ];

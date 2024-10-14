@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useAccount, useContractInfiniteReads, useContractRead, useContractReads } from 'wagmi';
 
+import { paginatedIndexesConfig } from '@/components/wagmi-upgrade/tools';
 import { publicRuntimeConfig } from '@/config/runtimeConfig';
 import { ThemeContext } from '@/contexts/Theme';
 
@@ -60,28 +61,28 @@ export const XenBurnProvider = ({ children }) => {
       setUserTokens(ownedTokens as any);
       setUser(g => ({
         ...g,
-        [chain?.id]: {
-          ...g?.[chain?.id],
-          [address]: {
-            ...g?.[chain?.id]?.[address],
+        [chain?.id as number]: {
+          ...g?.[chain?.id as number],
+          [address as `0x${string}`]: {
+            ...g?.[chain?.id as number]?.[address as `0x${string}`],
             ownedTokens
           }
         }
       }));
     }
-  });
+  } as any);
 
   useEffect(() => {
     setUser(g => ({
       ...g,
-      [chain?.id]: {
-        ...g?.[chain?.id],
-        [address]: {
-          ...g?.[chain?.id]?.[address],
+      [chain?.id as number]: {
+        ...g?.[chain?.id as number],
+        [address as `0x${string}`]: {
+          ...g?.[chain?.id as number]?.[address as `0x${string}`],
           // eslint-disable-next-line no-return-assign,no-sequences
           tokens: userTokens.reduce((res, e) => {
             res[Number(e)] = {
-              ...g?.[chain?.id]?.[address]?.tokens?.[Number(e)]
+              ...g?.[chain?.id as number]?.[address as `0x${string}`]?.tokens?.[Number(e)]
             };
             return res;
           }, {})
@@ -101,35 +102,35 @@ export const XenBurnProvider = ({ children }) => {
       const [{ result: tokenIdCounter }, { result: defaultPoolFee }, { result: minValue }] = init;
       setGlobal(g => ({
         ...g,
-        [chain?.id]: {
-          ...g?.[chain?.id],
+        [chain?.id as number]: {
+          ...g?.[chain?.id as number],
           tokenIdCounter,
           defaultPoolFee,
           minValue
         }
       }));
     }
-  });
+  } as any);
 
   useContractRead({
     ...xenBurnContract(chain),
     functionName: 'balanceOf',
-    args: [address],
+    args: [address as `0x${string}`],
     account: address,
     chainId: chain?.id,
     onSuccess: balance => {
       setUser(g => ({
         ...g,
-        [chain?.id]: {
-          ...g?.[chain?.id],
-          [address]: {
-            ...g?.[chain?.id]?.[address],
+        [chain?.id as number]: {
+          ...g?.[chain?.id as number],
+          [address as `0x${string}`]: {
+            ...g?.[chain?.id as number]?.[address as `0x${string}`],
             balance
           }
         }
       }));
     }
-  });
+  } as any);
 
   const { refetch: refetchAllowance } = useContractRead({
     ...xenContract(chain),
@@ -140,18 +141,18 @@ export const XenBurnProvider = ({ children }) => {
     onSuccess: allowance => {
       setUser(g => ({
         ...g,
-        [chain?.id]: {
-          ...g?.[chain?.id],
-          [address]: {
-            ...g?.[chain?.id]?.[address],
+        [chain?.id as number]: {
+          ...g?.[chain?.id as number],
+          [address as `0x${string}`]: {
+            ...g?.[chain?.id as number]?.[address as `0x${string}`],
             allowance
           }
         }
       }));
     }
-  });
+  } as any);
 
-  // const tokenIds = user[chain?.id]?.[address]?.userTokens || [];
+  // const tokenIds = user[chain?.id as number]?.[address as `0x${string}`]?.userTokens || [];
 
   const toHexString = (n: bigint) => n.toString(16).padStart(64, '0');
 
@@ -172,7 +173,7 @@ export const XenBurnProvider = ({ children }) => {
     cacheKey: `xen-burn-info-${chain?.id}:${address}`,
     enabled: false,
     ...paginatedIndexesConfig(
-      (index: number) => {
+      ((index: number) => {
         if (data?.[index]) {
           const tokenId = data[index];
           return [
@@ -193,7 +194,7 @@ export const XenBurnProvider = ({ children }) => {
           ];
         }
         return null;
-      },
+      }) as any,
       { start: 0, perPage, direction: 'increment' }
     ),
     onSuccess: data => {
@@ -205,14 +206,16 @@ export const XenBurnProvider = ({ children }) => {
       )) {
         setUser(g => ({
           ...g,
-          [chain?.id]: {
-            ...g?.[chain?.id],
-            [address]: {
-              ...g?.[chain?.id]?.[address],
+          [chain?.id as number]: {
+            ...g?.[chain?.id as number],
+            [address as `0x${string}`]: {
+              ...g?.[chain?.id as number]?.[address as `0x${string}`],
               tokens: {
-                ...g?.[chain?.id]?.[address]?.tokens,
+                ...g?.[chain?.id as number]?.[address as `0x${string}`]?.tokens,
                 [Number(info?.tokenId)]: {
-                  ...g?.[chain?.id]?.[address]?.tokens?.[Number(info?.tokenId)],
+                  ...g?.[chain?.id as number]?.[address as `0x${string}`]?.tokens?.[
+                    Number(info?.tokenId)
+                  ],
                   ...info
                 }
               }
@@ -221,11 +224,11 @@ export const XenBurnProvider = ({ children }) => {
         }));
       }
     }
-  });
+  } as any);
 
   useEffect(() => {
     if (userTokens.length > 0) {
-      fetchNextPage({ pageParam: 0 }).then(_ => {});
+      fetchNextPage({ pageParam: 0 } as any).then(_ => {});
     }
   }, [userTokens]);
 

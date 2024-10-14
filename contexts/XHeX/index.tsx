@@ -1,6 +1,5 @@
 import { createContext, useState } from 'react';
 import { useAccount, useContractRead, useContractReads } from 'wagmi';
-import type { Chain } from 'wagmi/chains';
 
 import { publicRuntimeConfig } from '@/config/runtimeConfig';
 import type { TAddress } from '@/contexts/types';
@@ -26,7 +25,7 @@ export const XHeXProvider = ({ children }) => {
   const [global, setGlobal] = useState({});
   const [user, setUser] = useState({});
   const { address, chain } = useAccount();
-  const xHeXContract = (chain: Chain) => ({
+  const xHeXContract = (chain: any) => ({
     address: Object.values(supportedNetworks).find(n => Number(n?.chainId) === chain?.id)
       ?.xHexAddress as any,
     abi: xHexABI,
@@ -53,8 +52,8 @@ export const XHeXProvider = ({ children }) => {
       ] = init;
       setGlobal(g => ({
         ...g,
-        [chain?.id]: {
-          ...g?.[chain?.id],
+        [chain?.id as number]: {
+          ...g?.[chain?.id as number],
           totalSupply,
           // cap,
           // startBlockNumber,
@@ -64,27 +63,27 @@ export const XHeXProvider = ({ children }) => {
         }
       }));
     }
-  });
+  } as any);
 
   const { refetch: refetchBalance } = useContractRead({
     ...xHeXContract(chain),
     functionName: 'balanceOf',
-    args: [address],
+    args: [address as `0x${string}`],
     account: address,
     chainId: chain?.id,
     onSuccess: balance => {
       setUser(g => ({
         ...g,
-        [chain?.id]: {
-          ...g?.[chain?.id],
-          [address]: {
-            ...g?.[chain?.id]?.[address],
+        [chain?.id as number]: {
+          ...g?.[chain?.id as number],
+          [address as `0x${string}`]: {
+            ...g?.[chain?.id as number]?.[address as `0x${string}`],
             balance
           }
         }
       }));
     }
-  });
+  } as any);
 
   return (
     <XHeXContext.Provider

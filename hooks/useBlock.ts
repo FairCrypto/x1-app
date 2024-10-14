@@ -17,7 +17,7 @@ export const useBlock = (onBlock?) => {
       const newWs = new WebSocket('ws://64.20.44.66:8900');
       newWs.onopen = () => {
         console.log('ws open');
-        ws.send('{"jsonrpc":"2.0","id":1,"method":"blockSubscribe","params":["all"]}');
+        newWs.send('{"jsonrpc":"2.0","id":1,"method":"blockSubscribe","params":["all"]}');
       };
       newWs.onclose = () => {
         console.log('ws close');

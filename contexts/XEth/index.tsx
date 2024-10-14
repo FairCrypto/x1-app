@@ -1,5 +1,4 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import type { Chain } from 'wagmi';
 import { useAccount, useContractInfiniteReads, useContractRead, useContractReads } from 'wagmi';
 
 import { paginatedIndexesConfig } from '@/components/wagmi-upgrade/tools';
@@ -34,14 +33,14 @@ export const XEthProvider = ({ children }) => {
   const [tokenIds, setTokenIds] = useState([]);
   const { address, chain } = useAccount();
 
-  const xEthContract = (chain: Chain) => ({
+  const xEthContract = (chain: any) => ({
     address: Object.values(supportedNetworks).find(n => Number(n?.chainId) === chain?.id)
       ?.xEthAddress as any,
     abi: xEthABI,
     account: address
   });
 
-  const xenContract = (chain: Chain) => ({
+  const xenContract = (chain: any) => ({
     address: Object.values(supportedNetworks).find(n => Number(n?.chainId) === chain?.id)
       ?.contractAddress as any,
     abi: contractABI
@@ -70,8 +69,8 @@ export const XEthProvider = ({ children }) => {
       ] = init;
       setGlobal(g => ({
         ...g,
-        [chain?.id]: {
-          ...g?.[chain?.id],
+        [chain?.id as number]: {
+          ...g?.[chain?.id as number],
           minStakeTerm,
           stakeIdCounter,
           xenPairFee,
@@ -80,7 +79,7 @@ export const XEthProvider = ({ children }) => {
         }
       }));
     }
-  });
+  } as any);
 
   /*
     mapping(address => uint256[]) public stakeIds;
@@ -101,36 +100,36 @@ export const XEthProvider = ({ children }) => {
       setTokenIds(stakeIds);
       setUser(g => ({
         ...g,
-        [chain?.id]: {
-          ...g?.[chain?.id],
-          [address]: {
-            ...g?.[chain?.id]?.[address],
+        [chain?.id as number]: {
+          ...g?.[chain?.id as number],
+          [address as `0x${string}`]: {
+            ...g?.[chain?.id as number]?.[address as `0x${string}`],
             stakeIds
           }
         }
       }));
     }
-  });
+  } as any);
 
   const { refetch: refetchBalance } = useContractRead({
     ...xEthContract(chain),
     functionName: 'balanceOf',
-    args: [address],
+    args: [address as `0x${string}`],
     account: address,
     chainId: chain?.id,
     onSuccess: balance => {
       setUser(g => ({
         ...g,
-        [chain?.id]: {
-          ...g?.[chain?.id],
-          [address]: {
-            ...g?.[chain?.id]?.[address],
+        [chain?.id as number]: {
+          ...g?.[chain?.id as number],
+          [address as `0x${string}`]: {
+            ...g?.[chain?.id as number]?.[address as `0x${string}`],
             balance
           }
         }
       }));
     }
-  });
+  } as any);
 
   const { refetch: refetchAllowance } = useContractRead({
     ...xenContract(chain),
@@ -141,23 +140,23 @@ export const XEthProvider = ({ children }) => {
     onSuccess: allowance => {
       setUser(g => ({
         ...g,
-        [chain?.id]: {
-          ...g?.[chain?.id],
-          [address]: {
-            ...g?.[chain?.id]?.[address],
+        [chain?.id as number]: {
+          ...g?.[chain?.id as number],
+          [address as `0x${string}`]: {
+            ...g?.[chain?.id as number]?.[address as `0x${string}`],
             allowance
           }
         }
       }));
     }
-  });
+  } as any);
 
   const { fetchNextPage: refetchUserXenStakes, isFetching: isFetching3 } = useContractInfiniteReads(
     {
       cacheKey: `xeth-${chain?.id}:${address}-stakeIds`,
       enabled: false,
       ...paginatedIndexesConfig(
-        (index: number) => {
+        ((index: any) => {
           if (stakeIds?.[index]) {
             const tokenId = stakeIds[index];
             return [
@@ -185,7 +184,7 @@ export const XEthProvider = ({ children }) => {
             ];
           }
           return null;
-        },
+        }) as any,
         { start: 0, perPage, direction: 'increment' }
       ),
       onSuccess: data => {
@@ -195,16 +194,16 @@ export const XEthProvider = ({ children }) => {
         for (const stakeId of tokenIds) {
           setUser(g => ({
             ...g,
-            [chain?.id]: {
-              ...g?.[chain?.id],
-              [address]: {
-                ...g?.[chain?.id]?.[address],
+            [chain?.id as number]: {
+              ...g?.[chain?.id as number],
+              [address as `0x${string}`]: {
+                ...g?.[chain?.id as number]?.[address as `0x${string}`],
                 xenStakes: {
-                  ...g?.[chain?.id]?.[address]?.xenStakes,
+                  ...g?.[chain?.id as number]?.[address as `0x${string}`]?.xenStakes,
                   [stakeId]: results[tokenIds.indexOf(stakeId) * 3].result
                 },
                 stakeInfo: {
-                  ...g?.[chain?.id]?.[address]?.stakeInfo,
+                  ...g?.[chain?.id as number]?.[address as `0x${string}`]?.stakeInfo,
                   [stakeId]:
                     stakeId < LIDO_TOKEN_ID0
                       ? results[tokenIds.indexOf(stakeId) * 3 + 1].result
@@ -215,13 +214,13 @@ export const XEthProvider = ({ children }) => {
           }));
         }
       }
-    }
+    } as any
   );
 
   useEffect(() => {
     if (tokenIds.length > 0) {
       // const pageParam = Math.ceil(ownedTokens.length / perPage);
-      refetchUserXenStakes({ pageParam: 0 }).then(_ => {});
+      refetchUserXenStakes({ pageParam: 0 } as any).then(_ => {});
     }
   }, [tokenIds]);
 

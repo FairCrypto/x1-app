@@ -45,4 +45,4 @@ const sitemapConfig = {
   }
 };
 
-module.exports = sitemapConfig;
+export default sitemapConfig;

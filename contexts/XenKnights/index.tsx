@@ -2,7 +2,7 @@ import { readContract } from '@wagmi/core';
 import debug from 'debug';
 import { createContext, useState } from 'react';
 import { keccak256 } from 'viem';
-import { useAccount, useContractRead, useContractReads } from 'wagmi';
+import { useAccount, useConfig, useContractRead, useContractReads } from 'wagmi';
 
 import { publicRuntimeConfig } from '@/config/runtimeConfig';
 
@@ -37,6 +37,7 @@ export const XenKnightsProvider = ({ children }) => {
   const [global, setGlobal] = useState({});
   const [user, setUser] = useState({});
   const { address, chain } = useAccount();
+  const config = useConfig();
 
   const xenContract = (chain: any) => ({
     address: Object.values(supportedNetworks).find(n => Number(n?.chainId) === chain?.id)
@@ -51,7 +52,6 @@ export const XenKnightsProvider = ({ children }) => {
   });
 
   const { isFetching } = useContractReads({
-    cacheOnBlock: true,
     contracts: [
       { ...xenKnightsContract(chain), functionName: 'startTs', chainId: chain?.id },
       { ...xenKnightsContract(chain), functionName: 'endTs', chainId: chain?.id },
@@ -75,8 +75,8 @@ export const XenKnightsProvider = ({ children }) => {
       ] = init;
       setGlobal(g => ({
         ...g,
-        [chain?.id]: {
-          ...g?.[chain?.id],
+        [chain?.id as number]: {
+          ...g?.[chain?.id as number],
           startTs,
           endTs,
           status,
@@ -88,7 +88,7 @@ export const XenKnightsProvider = ({ children }) => {
         }
       }));
     }
-  });
+  } as any);
 
   const { refetch: refetchAllowance } = useContractRead({
     ...xenContract(chain),
@@ -99,16 +99,16 @@ export const XenKnightsProvider = ({ children }) => {
     onSuccess: allowance => {
       setUser(g => ({
         ...g,
-        [chain?.id]: {
-          ...g?.[chain?.id],
-          [address]: {
-            ...g?.[chain?.id]?.[address],
+        [chain?.id as number]: {
+          ...g?.[chain?.id as number],
+          [address as `0x${string}`]: {
+            ...g?.[chain?.id as number]?.[address as `0x${string}`],
             allowance
           }
         }
       }));
     }
-  });
+  } as any);
 
   /*
   N.B. Moved to useBidAmounts.ts
@@ -122,10 +122,10 @@ export const XenKnightsProvider = ({ children }) => {
     onSuccess: (amounts) => {
       setUser(g => ({
         ...g,
-        [chain?.id]: {
-          ...g?.[chain?.id],
-          [address]: {
-            ...g?.[chain?.id]?.[address],
+        [chain?.id as number]: {
+          ...g?.[chain?.id as number],
+          [address as `0x${string}`]: {
+            ...g?.[chain?.id as number]?.[address as `0x${string}`],
             amounts,
           }
         }
@@ -205,7 +205,7 @@ export const XenKnightsProvider = ({ children }) => {
   };
 
   const getKnightsBidAmount = async (addr: string) =>
-    readContract({
+    readContract(config, {
       ...xenKnightsContract(chain).address,
       functionName: 'amounts',
       args: [keccak256(addr as `0x${string}`)],
@@ -221,8 +221,8 @@ export const XenKnightsProvider = ({ children }) => {
       }));
       setGlobal(g => ({
         ...g,
-        [chain?.id]: {
-          ...g?.[chain?.id],
+        [chain?.id as number]: {
+          ...g?.[chain?.id as number],
           leaders,
           leaderboard: allLeaders,
           bids

@@ -1,6 +1,6 @@
 import useSWRInfinite from 'swr/infinite';
 
-import type { TBRCAsset, TInscription } from '@/components/btc/types';
+import type { TBRCAsset, TInscription } from '@/contexts/Btc/types';
 
 const getKey = (urls: TInscription[]) => (pageIndex: number) => {
   // reached the end
