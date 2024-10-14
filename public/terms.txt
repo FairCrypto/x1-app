@@ -1,0 +1,17 @@
+XEN Network Terms of Use v0.1 (Dec 14, 2022).
+Current version of this document is available at: https://xen.network/terms_short.txt.
+Full current version of Terms of Use is available at: https://xen.network/terms.html.
+
+WARNING: Advanced/experimental technology! Users are strongly encouraged to do their own research before proceeding.
+
+Welcome to XEN Network!
+XEN Network allows you to access and interact with certain portions of information stored in decentralized transactional databases (aka ‘blockchains’) accessible via ABI (Application Binary Interface), and colloquially referred to as ‘smart contracts’.
+
+XEN Network is a decentralized application (DApp) that doesn’t require registration, doesn’t create user accounts or store user information. More information on the design of the XEN Network could be found at: https://faircrypto.org/xencryptolp.pdf.
+
+XEN Network never has access to your private key(s). XEN Network uses applications known as Wallets or Crypto-Wallets (e.g. MetaMask, etc.) to sign requests to smart contract(s) (‘transactions’) and send them to respective blockchain(s).
+Sending transactions to blockchains requires users to pay network usage fees (aka ‘gas’). Amount of required gas depends on a specific function of a smart contract. Gas price, nominated in blockchain network’s native coin (e.g. ether for Ethereum, etc.) is constantly changing depending on the current load of the network; the difference between lowest and highest gas prices could be several orders of magnitude.
+
+WARNING: Users are strongly encouraged to familiarize themselves with the concept of gas and the gas pricing before proceeding.
+
+By signing this document with your Wallet and/or continuing to use XEN Network, you accept the XEN Network terms of use (https://xen.network/terms.html).

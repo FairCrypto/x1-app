@@ -1,0 +1,43 @@
+{
+	"org": {
+		"candidate_name": "xencrypto",
+		"website": "https://xen.network",
+		"code_of_conduct": "https://xen.network/terms",
+		"ownership_disclosure": "https://xen.network/terms",
+		"email": "nick@xen.network",
+		"github_user": ["nibty", "lbelyaev"],
+		"chain_resources": "",
+		"other_resources": [],
+		"branding": {
+			"logo_256": "https://xen.network/xen-logo-square-dark-256x256.png",
+			"logo_1024": "https://xen.network/xen-logo-square-dark-1024x1024.png",
+			"logo_svg": "https://xen.network/xen-logo-square-dark.svg"
+		},
+		"location": {
+			"name": "America",
+			"country": "US",
+			"latitude": 37.2358,
+			"longitude": 37.2358
+		},
+		"social": {
+			"telegram": "XENCryptoTalk",
+			"twitter": "XEN_Crypto",
+			"github": "FairCrypto",
+			"youtube": "channel/UCiw5nyHHt9BPHvoRbcGNehA",
+			"reddit": "xencrypto"
+		}
+	},
+	"nodes": [
+		{
+			"location": {
+				"name": "America",
+				"country": "US",
+				"latitude": 43.8041,
+				"longitude": 120.5542
+			},
+			"node_type": "producer",
+			"full": false
+		}
+	],
+	"producer_account_name": "xencrypto"
+}

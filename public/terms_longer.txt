@@ -1,0 +1,13 @@
+Welcome to XEN Network!
+
+XEN Network allows you to access and interact with certain portions of information stored in blockchains and accessible via Application Binary Interface (‘smart contracts’).
+
+XEN Network uses applications known as crypto-wallets to sign requests to smart contract(s) (‘transactions’) and send them to respective blockchain(s).
+Sending transactions to blockchains requires users to pay network usage fees (aka ‘gas’). Gas price, nominated in blockchain network’s native coin is constantly changing depending on the current load of the network.
+
+WARNING: Users are strongly encouraged to familiarize themselves with the concept of gas and the gas pricing before proceeding.
+
+By signing this document with your Wallet and/or continuing to use XEN Network, you accept the XEN Network terms of use https://xen.network/terms.html.
+
+Signing your consent to the Terms of Use is not a blockchain transaction and incurs no cost. Signature object is stored only locally in your browser.
+

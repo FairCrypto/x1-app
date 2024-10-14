@@ -1,0 +1,34 @@
+@font-face {
+  font-family: 'Oswald';
+  src: url('Oswald/Oswald-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Oswald';
+  src: url('Oswald/Oswald-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Old Standard TT';
+  src: url('Old_Standard_TT/OldStandardTT-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('Montserrat/Montserrat-VariableFont_wght.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Montserrat Thin';
+  src: url('Montserrat/Montserrat-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100;
+  font-style: normal;
+}

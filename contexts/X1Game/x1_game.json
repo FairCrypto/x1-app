@@ -1,0 +1,578 @@
+{
+  "address": "8yeFvD9rxGdhBcwCKgtzQwjgZVa7EJW3aK6uxoGB6Kj7",
+  "metadata": {
+    "name": "x1_game",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Created with Anchor"
+  },
+  "instructions": [
+    {
+      "name": "click",
+      "discriminator": [
+        11,
+        147,
+        179,
+        178,
+        145,
+        118,
+        45,
+        186
+      ],
+      "accounts": [
+        {
+          "name": "x1_game_state",
+          "writable": true
+        },
+        {
+          "name": "x1_round_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  120,
+                  49,
+                  45,
+                  103,
+                  97,
+                  109,
+                  101,
+                  45,
+                  114,
+                  111,
+                  117,
+                  110,
+                  100
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "round"
+              }
+            ]
+          }
+        },
+        {
+          "name": "x1_user_round_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  120,
+                  49,
+                  45,
+                  117,
+                  115,
+                  101,
+                  114,
+                  45,
+                  114,
+                  111,
+                  117,
+                  110,
+                  100
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "round"
+              },
+              {
+                "kind": "account",
+                "path": "user"
+              }
+            ]
+          }
+        },
+        {
+          "name": "x1_user_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  120,
+                  49,
+                  45,
+                  103,
+                  97,
+                  109,
+                  101,
+                  45,
+                  117,
+                  115,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "user"
+              }
+            ]
+          }
+        },
+        {
+          "name": "user",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "round",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "initialize",
+      "discriminator": [
+        175,
+        175,
+        109,
+        31,
+        13,
+        152,
+        155,
+        237
+      ],
+      "accounts": [
+        {
+          "name": "x1_game_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  120,
+                  49,
+                  45,
+                  103,
+                  97,
+                  109,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "admin",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "mint_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  120,
+                  49,
+                  45,
+                  103,
+                  97,
+                  109,
+                  101,
+                  45,
+                  109,
+                  105,
+                  110,
+                  116
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "rent",
+          "address": "SysvarRent111111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "_params",
+          "type": {
+            "defined": {
+              "name": "InitTokenParams"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "mint",
+      "discriminator": [
+        51,
+        57,
+        225,
+        47,
+        182,
+        146,
+        137,
+        166
+      ],
+      "accounts": [
+        {
+          "name": "user_token_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "user"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  6,
+                  221,
+                  246,
+                  225,
+                  215,
+                  101,
+                  161,
+                  147,
+                  217,
+                  203,
+                  225,
+                  70,
+                  206,
+                  235,
+                  121,
+                  172,
+                  28,
+                  180,
+                  133,
+                  237,
+                  95,
+                  91,
+                  55,
+                  145,
+                  58,
+                  140,
+                  245,
+                  133,
+                  126,
+                  255,
+                  0,
+                  169
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "mint_account"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "x1_game_state",
+          "writable": true
+        },
+        {
+          "name": "x1_round_state",
+          "writable": true
+        },
+        {
+          "name": "x1_user_round_state",
+          "writable": true
+        },
+        {
+          "name": "x1_user_state",
+          "writable": true
+        },
+        {
+          "name": "user",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "mint_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  120,
+                  49,
+                  45,
+                  103,
+                  97,
+                  109,
+                  101,
+                  45,
+                  109,
+                  105,
+                  110,
+                  116
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "associated_token_program",
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+        }
+      ],
+      "args": [
+        {
+          "name": "round",
+          "type": "u64"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "X1GameState",
+      "discriminator": [
+        200,
+        158,
+        125,
+        225,
+        99,
+        1,
+        249,
+        31
+      ]
+    },
+    {
+      "name": "X1RoundState",
+      "discriminator": [
+        178,
+        137,
+        198,
+        245,
+        73,
+        182,
+        215,
+        240
+      ]
+    },
+    {
+      "name": "X1UserRoundState",
+      "discriminator": [
+        189,
+        15,
+        73,
+        32,
+        151,
+        227,
+        245,
+        231
+      ]
+    },
+    {
+      "name": "X1UserState",
+      "discriminator": [
+        229,
+        173,
+        117,
+        242,
+        182,
+        188,
+        247,
+        143
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "MintIsAlreadyActive",
+      "msg": "X1Game Mint has been already initialized"
+    },
+    {
+      "code": 6001,
+      "name": "MintIsNotActive",
+      "msg": "X1Game Mint has not yet started or is over"
+    },
+    {
+      "code": 6002,
+      "name": "BadSlotValue",
+      "msg": "Slot value is Out of Order"
+    },
+    {
+      "code": 6003,
+      "name": "BadParam",
+      "msg": "Bad param value"
+    },
+    {
+      "code": 6004,
+      "name": "WrongRound",
+      "msg": "Wrong round"
+    },
+    {
+      "code": 6005,
+      "name": "AlreadyMinted",
+      "msg": "Already minted"
+    }
+  ],
+  "types": [
+    {
+      "name": "InitTokenParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "type": "string"
+          },
+          {
+            "name": "uri",
+            "type": "string"
+          },
+          {
+            "name": "decimals",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "X1GameState",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "last_round_slot",
+            "type": "u64"
+          },
+          {
+            "name": "current_round",
+            "type": "u64"
+          },
+          {
+            "name": "total_points",
+            "type": "u128"
+          }
+        ]
+      }
+    },
+    {
+      "name": "X1RoundState",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "cap",
+            "type": "u128"
+          },
+          {
+            "name": "total_points",
+            "type": "u128"
+          }
+        ]
+      }
+    },
+    {
+      "name": "X1UserRoundState",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "points",
+            "type": "u128"
+          },
+          {
+            "name": "minted_points",
+            "type": "u128"
+          }
+        ]
+      }
+    },
+    {
+      "name": "X1UserState",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "last_round",
+            "type": "u64"
+          },
+          {
+            "name": "score",
+            "type": "u64"
+          },
+          {
+            "name": "user_points",
+            "type": "u128"
+          }
+        ]
+      }
+    }
+  ]
+}
