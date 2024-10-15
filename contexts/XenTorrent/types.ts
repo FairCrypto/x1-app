@@ -25,4 +25,5 @@ export type TXenTorrentContext = {
   refetchOwnedTokens: any;
   refetchAllowance: any;
   fetchNextPage: any;
+  fetchNextPageMintedTokenData: any;
 };

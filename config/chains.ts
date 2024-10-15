@@ -1,10 +1,8 @@
 import {
   arbitrum,
-  arbitrumGoerli,
   avalanche,
   avalancheFuji,
   base,
-  baseGoerli,
   bsc,
   bscTestnet,
   dogechain,
@@ -12,15 +10,12 @@ import {
   evmosTestnet,
   fantom,
   fantomTestnet,
-  goerli,
   mainnet,
   moonbaseAlpha,
   moonbeam,
   okc,
   optimism,
-  optimismGoerli,
   polygon,
-  polygonMumbai,
   pulsechain,
   pulsechainV4,
   sepolia
@@ -45,16 +40,11 @@ export const chains = [
   optimism,
   base,
   // testnets
-  goerli,
   sepolia,
-  polygonMumbai,
   bscTestnet,
   avalancheFuji,
   moonbaseAlpha,
   evmosTestnet,
   fantomTestnet,
-  pulsechainV4,
-  arbitrumGoerli,
-  optimismGoerli,
-  baseGoerli
+  pulsechainV4
 ];

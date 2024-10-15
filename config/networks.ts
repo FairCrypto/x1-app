@@ -76,7 +76,7 @@ const xenTorrentGenesisBlocks = {
   optimism: 0,
   base: 0,
   // testnets
-  sepolia: null,
+  sepolia: 6878678,
   'bsc-testnet': 0,
   'pulse-testnet': 0,
   mumbai: 0,

@@ -28,7 +28,8 @@ const initialValue: TXenTorrentContext = {
   setUser: () => {},
   refetchOwnedTokens: () => {},
   refetchAllowance: () => {},
-  fetchNextPage: () => {}
+  fetchNextPage: () => {},
+  fetchNextPageMintedTokenData: () => {}
 };
 
 const ascending = (a: bigint, b: bigint) => {
@@ -411,56 +412,55 @@ export const XenTorrentProvider = ({ children, lowBurn = false }: any) => {
     }));
   }, [logs]);
 
-  const { data: xenftMintedTokenData, isFetching: isFetchingMintedTokenData } =
-    useInfiniteReadContracts({
-      cacheKey: `xen-torrent-${chain?.id}:${address}-minted-info`,
-      contracts: (index: number) =>
-        [...new Array(perPage)]
-          .map((_, i) => i)
-          .flatMap(
-            i =>
-              [
-                {
-                  ...xenTorrentContract(chain),
-                  chainId: chain?.id,
-                  account: address,
-                  functionName: 'mintInfo',
-                  args: [
-                    (logs || ([] as any)).map((log: any) => BigInt(log?.topics?.[3]))?.[
-                      index * perPage + i
-                    ]
-                  ]
-                },
-                {
-                  ...xenTorrentContract(chain),
-                  chainId: chain?.id,
-                  account: address,
-                  functionName: 'vmuCount',
-                  args: [
-                    (logs || ([] as any)).map((log: any) => BigInt(log?.topics?.[3]))?.[
-                      index * perPage + i
-                    ]
-                  ]
-                },
-                {
-                  ...xenTorrentContract(chain),
-                  chainId: chain?.id,
-                  account: address,
-                  functionName: 'tokenURI',
-                  args: [
-                    (logs || ([] as any)).map((log: any) => BigInt(log?.topics?.[3]))?.[
-                      index * perPage + i
-                    ]
-                  ]
-                }
-              ] as const
-          ),
-      query: {
-        enabled: xenTorrentContract(chain)?.address && address && !!chain?.id && !!logs,
-        initialPageParam: 0,
-        getNextPageParam: (_lastPage, _allPages, lastPageParam) => lastPageParam + perPage
-      }
-    });
+  const {
+    data: xenftMintedTokenData,
+    isFetching: isFetchingMintedTokenData,
+    fetchNextPage: fetchNextPageMintedTokenData
+  } = useInfiniteReadContracts({
+    cacheKey: `xen-torrent-${chain?.id}:${address}-minted-info`,
+    contracts: (index: number) => {
+      console.log('fetchNextPageMintedTokenData', index);
+      return [...new Array(perPage)]
+        .map((_, i) => i)
+        .flatMap(
+          i =>
+            [
+              {
+                ...xenTorrentContract(chain),
+                chainId: chain?.id,
+                account: address,
+                functionName: 'mintInfo',
+                args: [
+                  (logs || ([] as any)).map((log: any) => BigInt(log?.topics?.[3]))?.[index + i]
+                ]
+              },
+              {
+                ...xenTorrentContract(chain),
+                chainId: chain?.id,
+                account: address,
+                functionName: 'vmuCount',
+                args: [
+                  (logs || ([] as any)).map((log: any) => BigInt(log?.topics?.[3]))?.[index + i]
+                ]
+              },
+              {
+                ...xenTorrentContract(chain),
+                chainId: chain?.id,
+                account: address,
+                functionName: 'tokenURI',
+                args: [
+                  (logs || ([] as any)).map((log: any) => BigInt(log?.topics?.[3]))?.[index + i]
+                ]
+              }
+            ] as const
+        );
+    },
+    query: {
+      enabled: xenTorrentContract(chain)?.address && address && !!chain?.id && !!logs,
+      initialPageParam: 0,
+      getNextPageParam: (_lastPage, _allPages, lastPageParam) => lastPageParam + perPage
+    }
+  });
 
   useEffect(() => {
     if (!xenftMintedTokenData) return;
@@ -468,12 +468,12 @@ export const XenTorrentProvider = ({ children, lowBurn = false }: any) => {
     console.log('xenftMintedTokenData', xenftMintedTokenData);
     const { pages, pageParams } = xenftMintedTokenData as any;
 
-    const page: number = (pageParams.slice(-1)[0] || 0) as number;
+    const offset: number = (pageParams.slice(-1)[0] || 0) as number;
     const tokenInfos = tokenInfo(
       pages.slice(-1)[0],
       ((logs || ([] as any)).map((log: any) => BigInt(log?.topics?.[3])) as bigint[]).slice(
-        page * perPage,
-        (page + 1) * perPage
+        offset,
+        offset + perPage
       )
     );
     // eslint-disable-next-line no-restricted-syntax
@@ -497,7 +497,7 @@ export const XenTorrentProvider = ({ children, lowBurn = false }: any) => {
         }
       }));
     }
-  }, [xenftTokenData]);
+  }, [xenftMintedTokenData]);
 
   return (
     <XenTorrentContext.Provider
@@ -515,7 +515,8 @@ export const XenTorrentProvider = ({ children, lowBurn = false }: any) => {
           isFetchingLogs,
         refetchAllowance,
         refetchOwnedTokens,
-        fetchNextPage: () => console.log('fetchNextPage not implemented')
+        fetchNextPage: () => console.log('fetchNextPage not implemented'),
+        fetchNextPageMintedTokenData
       }}
     >
       {children}

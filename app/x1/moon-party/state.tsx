@@ -5,6 +5,7 @@ import { useAccount } from 'wagmi';
 
 import MoonPartyTable from '@/app/x1/moon-party/table';
 import networks from '@/config/networks';
+import { ThemeContext } from '@/contexts/Theme';
 import { Web3Context } from '@/contexts/Web3';
 import { XenCryptoContext } from '@/contexts/XenCrypto';
 import { XenTorrentContext } from '@/contexts/XenTorrent';
@@ -41,10 +42,12 @@ type TokenInfo = {
 
 const State = () => {
   const { global: xen, user: xenUser, isFetching: isFetchingXen } = useContext(XenCryptoContext);
+  const { safeRows: perPage } = useContext(ThemeContext);
   const {
     global: torrent,
     user: torrentUser,
-    isFetching: isFetchingXenft
+    isFetching: isFetchingXenft,
+    fetchNextPageMintedTokenData
   } = useContext(XenTorrentContext);
   const { address, chain } = useAccount();
   const xenBalance = xenUser[chain?.id as number]?.[address as string]?.balance;
@@ -54,8 +57,6 @@ const State = () => {
   const tokenInfos = torrentUser[chain?.id as number]?.[address as string]?.tokens || {};
   const isFetching = isFetchingXen || isFetchingXenft;
   const [xenfts, setXenfts] = useState<Record<string, TokenInfo>>({});
-  // console.log('xenTorrent', torrent);
-  // console.log('user', torrentUser);
 
   const config = useContext(Web3Context);
   const supportedNetworks = networks({ config });
@@ -63,6 +64,28 @@ const State = () => {
     n => Number(n?.chainId) === Number(chain?.id)
   );
   const networkId = currentNetwork?.networkId;
+
+  useEffect(() => {
+    const repeat = async () => {
+      let result = await fetchNextPageMintedTokenData();
+      console.log('fetching first page', result);
+      while (
+        result.hasNextPage &&
+        result.data?.pageParams?.length <= mintedTokens.length / perPage
+      ) {
+        // eslint-disable-next-line no-await-in-loop
+        result = await result.fetchNextPage();
+        console.log('fetching next page', result);
+        // eslint-disable-next-line no-await-in-loop
+        await new Promise(resolve => {
+          setTimeout(resolve, 1_000);
+        });
+      }
+    };
+    if (mintedTokens.length > 0) {
+      repeat().then(() => console.log('done'));
+    }
+  }, [mintedTokens]);
 
   useEffect(() => {
     if (torrent?.[chain?.id as number] && mintedTokens.length > 0) {
