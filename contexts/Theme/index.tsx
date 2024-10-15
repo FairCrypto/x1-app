@@ -1,12 +1,12 @@
 'use client';
 
-import type { ThemeOptions } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material';
 import { responsiveFontSizes } from '@mui/material/styles';
 import { darkTheme, lightTheme } from '@rainbow-me/rainbowkit';
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 
-import { defaultTheme, overrides } from '@/styles/theme';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
+import { defaultLightTheme, defaultTheme, overrides } from '@/styles/theme';
 
 type TThemeContext = {
   mode: string;
@@ -29,12 +29,12 @@ const initialValue: TThemeContext = {
 export const ThemeContext = createContext<TThemeContext>(initialValue);
 
 export const FlexibleThemeProvider = ({ children }) => {
-  const [mode, setMode] = useState('dark');
-  const themeOptions = { ...defaultTheme, ...overrides('dark') } as ThemeOptions;
-  const [theme, setTheme] = useState(createTheme(themeOptions));
+  const [mode, setMode] = useLocalStorage<'dark' | 'light'>('theme', 'dark');
+
   const [isLarge, setLarge] = useState(false);
   const [isExtraLarge, setExtraLarge] = useState(false);
   const [safeRows, setSafeRows] = useState(0);
+
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -53,22 +53,11 @@ export const FlexibleThemeProvider = ({ children }) => {
     setMode(query.matches ? 'dark' : 'light');
   };
 
-  const flexibleTheme = {
-    ...theme,
-    palette: {
-      ...theme.palette,
-      mode
-    }
-  };
-
   useEffect(() => {
-    const userTheme = window.localStorage.getItem('theme');
-    if (!userTheme) {
+    if (!mode) {
       const mq = window.matchMedia('(prefers-color-scheme: dark)');
       mq.onchange = onDarkPrefChange(mq);
       onDarkPrefChange(mq)();
-    } else {
-      setMode(userTheme);
     }
     const mql = window.matchMedia(large);
     const mxql = window.matchMedia(extraLarge);
@@ -79,41 +68,39 @@ export const FlexibleThemeProvider = ({ children }) => {
       const rows = Math.ceil((window.innerHeight * 0.6 - 112) / 52);
       setSafeRows(rows);
     }
-  }, []);
-
-  useEffect(() => {
-    let newOptions = {
-      ...defaultTheme,
-      palette: {
-        ...defaultTheme.palette,
-        mode
-      },
-      ...overrides(mode)
-    };
-    if (mode === 'light') {
-      newOptions = {
-        ...newOptions,
-        palette: {
-          ...newOptions.palette,
-          background: {
-            default: mode === 'light' ? '#ededed' : '#121212'
-          }
-        }
-      };
-    }
-    const newTheme = createTheme(newOptions as ThemeOptions);
-    setTheme(responsiveFontSizes(newTheme));
   }, [mode]);
 
-  const rkTheme = useMemo(
+  const theme = useMemo(
     () =>
-      mode === 'dark' ? darkTheme({ overlayBlur: 'none' }) : lightTheme({ overlayBlur: 'none' }),
+      responsiveFontSizes(
+        createTheme(mode === 'dark' ? defaultTheme : defaultLightTheme, overrides(mode))
+      ),
+    [mode]
+  );
+
+  /*
+      primary: '#00FF41',
+      secondary: '#008F11',
+      disabled: '#003B00'
+   */
+
+  const rkDarkOptions = {
+    overlayBlur: 'none',
+    accentColor: '00FF41'
+  };
+
+  const rkLightOptions = {
+    overlayBlur: 'none'
+  };
+
+  const rkTheme = useMemo(
+    () => (mode === 'dark' ? darkTheme(rkDarkOptions as any) : lightTheme(rkLightOptions as any)),
     [mode]
   );
 
   return (
     <ThemeContext.Provider value={{ mode, setMode, isLarge, isExtraLarge, safeRows, rkTheme }}>
-      <ThemeProvider theme={flexibleTheme}>{mounted && children}</ThemeProvider>
+      <ThemeProvider theme={theme}>{mounted && children}</ThemeProvider>
     </ThemeContext.Provider>
   );
 };
