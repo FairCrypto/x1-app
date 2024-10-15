@@ -38,10 +38,12 @@ export const FlexibleThemeProvider = ({ children }) => {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    if (!mounted) setMounted(true);
-  }, [mounted]);
+    if (!mounted) {
+      setMounted(true);
+    }
+  }, []);
 
-  const onScreenChange = (mql, mxql) => () => {
+  const onScreenChange = (mql: MediaQueryList, mxql: MediaQueryList) => () => {
     setLarge(mql.matches);
     setExtraLarge(mxql.matches);
   };
@@ -49,7 +51,7 @@ export const FlexibleThemeProvider = ({ children }) => {
   const large = '(min-width: 768px) and (orientation: landscape)';
   const extraLarge = '(min-width: 1280px) and (orientation: landscape)';
 
-  const onDarkPrefChange = query => () => {
+  const onDarkPrefChange = (query: MediaQueryList) => () => {
     setMode(query.matches ? 'dark' : 'light');
   };
 

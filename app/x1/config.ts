@@ -38,7 +38,7 @@ export const wagmiConfig = createConfig({
   // appName: 'Xen Network',
   // projectId: publicRuntimeConfig?.walletConnectApiKey || '',
   chains: supportedChains as any,
-  ssr: true,
+  // ssr: true,
   transports,
   storage: createStorage({
     storage: cookieStorage

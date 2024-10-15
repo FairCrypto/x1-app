@@ -36,7 +36,6 @@ const ApplicationBar = () => {
   const path = usePathname();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [projectEl, setProjectEl] = useState<null | HTMLElement>(null);
-  // const wagmiConfig = useConfig();
   const [expanded, setExpanded] = useState('');
 
   const open = Boolean(anchorEl);

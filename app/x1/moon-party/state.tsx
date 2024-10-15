@@ -112,13 +112,7 @@ const State = () => {
         {}
       );
       setXenfts(aggregated);
-      console.log(
-        'aggregated',
-        aggregated,
-        JSON.stringify(Object.entries(tokenInfos), (_key, value) =>
-          typeof value === 'bigint' ? `${value.toString()}n` : value
-        )
-      );
+      console.log('aggregated', aggregated);
     } else {
       setXenfts({});
     }

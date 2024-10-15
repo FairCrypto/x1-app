@@ -24,6 +24,7 @@ const X1Layout = ({ children }) => {
         publicRuntimeConfig={config}
         wagmiConfig={{ chains }}
         initialState={initialState}
+        mode="dark"
       >
         <ApplicationBar />
         <main className={styles.main} style={{ minHeight: '90vh' }}>

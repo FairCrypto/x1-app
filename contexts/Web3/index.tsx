@@ -3,7 +3,7 @@
 import '../../styles/fonts/stylesheet.css';
 import '@rainbow-me/rainbowkit/styles.css';
 
-import { connectorsForWallets, getDefaultConfig, RainbowKitProvider } from '@rainbow-me/rainbowkit';
+import { getDefaultConfig, RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import {
   coinbaseWallet,
   injectedWallet,
@@ -11,7 +11,6 @@ import {
   phantomWallet,
   rabbyWallet,
   rainbowWallet,
-  trustWallet,
   walletConnectWallet
 } from '@rainbow-me/rainbowkit/wallets';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -31,14 +30,16 @@ export const Web3Provider = ({
   children,
   publicRuntimeConfig,
   wagmiConfig,
-  initialState
+  initialState,
+  mode
 }: {
   children: React.ReactNode;
   publicRuntimeConfig: TPublicRuntimeConfig;
   wagmiConfig: Record<string, any>;
   initialState: State | undefined;
+  mode: string;
 }) => {
-  const { rkTheme: theme } = useTheme();
+  const { rkTheme } = useTheme();
 
   const { isTestnet } = publicRuntimeConfig;
   const supportedNetworks = networks({ config: publicRuntimeConfig });
@@ -57,7 +58,7 @@ export const Web3Provider = ({
     walletConnectWallet,
     rabbyWallet,
     // bitKeepWallet({ projectId, chains }),
-    trustWallet,
+    // trustWallet,
     // okxWallet,
     coinbaseWallet,
     injectedWallet
@@ -93,31 +94,16 @@ export const Web3Provider = ({
       }
     ],
     chains: wagmiConfig.chains,
-    ssr: true,
+    // ssr: true,
     transports
   });
 
-  const connectors = connectorsForWallets(
-    [
-      {
-        groupName: 'Recommended',
-        wallets
-      }
-    ],
-    { projectId, appName: 'Xen Network' }
-  );
-  const configWithConnectors = {
-    ...config,
-    connectors
-  };
-
-  // console.log('wagmiConfig web3', configWithConnectors);
   const queryClient = new QueryClient();
 
   return (
     <WagmiProvider config={config} initialState={initialState}>
       <QueryClientProvider client={queryClient}>
-        <RainbowKitProvider theme={theme}>
+        <RainbowKitProvider theme={rkTheme}>
           <Web3Context.Provider value={publicRuntimeConfig}>{children}</Web3Context.Provider>
         </RainbowKitProvider>
       </QueryClientProvider>

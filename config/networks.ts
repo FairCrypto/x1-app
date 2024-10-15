@@ -456,11 +456,13 @@ const networkConfigs = ({ config = {} }: NextConfig): Record<string, TNetworkCon
     networkId: 'mumbai',
     name: 'Mumbai Testnet',
     currencyUnit: 'MATIC',
-    wsURL: arrayOrString(config.wsUrlOverrides?.mumbai),
+    wsURL:
+      'wss://polygon-mumbai.infura.io/ws/v3/8d4ca703ac784214bcc33bfd7643f31f' ||
+      arrayOrString(config.wsUrlOverrides?.mumbai),
     // || 'wss://mumbai.fc-internal.com'
     rpcURL:
-      arrayOrString(config.rpcUrlOverrides?.mumbai) ||
-      'https://polygon-mumbai.infura.io/v3/3d2cd93811864ff0ad6e9b2efed40416',
+      'https://polygon-mumbai.infura.io/v3/8d4ca703ac784214bcc33bfd7643f31f' ||
+      arrayOrString(config.rpcUrlOverrides?.mumbai),
     explorerUrl: 'https://mumbai.polygonscan.com/',
     logoUrl: '/logos/polygon-logo.png',
     xenftMessage: config.xenftMessage?.mumbai,

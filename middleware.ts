@@ -10,26 +10,6 @@ const ratelimit = new Ratelimit({
 });
 
 export async function middleware(request: NextRequest) {
-  /*
-  if (request.nextUrl.pathname.startsWith('/api/sol')) {
-    const body = await request.json();
-    const { success, pending, limit, reset, remaining } = await ratelimit.limit('all');
-    return success
-      ? fetch(process.env.SOLANA_RPC_URL, {
-          method: 'POST',
-          body: JSON.stringify(body),
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        })
-      : new Response('Rate limit exceeded', { status: 429 });
-  }
-
-  if (request.nextUrl.pathname.startsWith('/api/sol')) {
-    return new Response('Not Found', { status: 404 });
-  }
-   */
-
   if (request.nextUrl.pathname.startsWith('/api/x1') && process.env.X1_RPC_URL) {
     const body = await request.json();
     return fetch(process.env.X1_RPC_URL, {
@@ -50,6 +30,10 @@ export async function middleware(request: NextRequest) {
         'Content-Type': 'application/json'
       }
     });
+  }
+
+  if (request.nextUrl.pathname === '/') {
+    return NextResponse.redirect(`${request.nextUrl.origin}/x1/moon-party`);
   }
 
   return NextResponse.next();

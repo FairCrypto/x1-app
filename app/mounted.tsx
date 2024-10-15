@@ -8,8 +8,11 @@ const MountedProvider = ({ children }: { children: React.ReactNode }) => {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    if (!mounted) setMounted(true);
-  }, [mounted]);
+    if (!mounted) {
+      console.log('mounted');
+      setMounted(true);
+    }
+  }, []);
 
   return <MountedContext.Provider value={null}>{mounted && children}</MountedContext.Provider>;
 };
