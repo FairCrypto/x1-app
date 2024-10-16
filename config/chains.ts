@@ -7,11 +7,10 @@ import {
   bscTestnet,
   dogechain,
   evmos,
-  evmosTestnet,
   fantom,
   fantomTestnet,
+  holesky,
   mainnet,
-  moonbaseAlpha,
   moonbeam,
   okc,
   optimism,
@@ -41,10 +40,9 @@ export const chains = [
   base,
   // testnets
   sepolia,
+  holesky,
   bscTestnet,
   avalancheFuji,
-  moonbaseAlpha,
-  evmosTestnet,
   fantomTestnet,
   pulsechainV4
 ];

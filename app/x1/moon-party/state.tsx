@@ -96,26 +96,25 @@ const State = () => {
       }
 
       const getBurnRate = id => {
-        const cls = classLimits?.findLastIndex((l, i) => id <= l);
-        return contractBurnRates?.[cls] || 0;
+        const cls = classLimits?.findLastIndex((l, i) => Number(id) <= l);
+        return contractBurnRates?.[cls] || 0n;
       };
       const getClass = (id, isLimited) => {
         const cls = classLimits?.findLastIndex((l, i) => Number(id) <= l);
         return isLimited ? 1 : cls;
       };
 
-      const burnRates = mintedTokens.map(getBurnRate);
       const mintInfos = Object.values(tokenInfos);
       const merged = mintInfos
         .map((l, i) => ({
           id: l.tokenId,
-          burnRate: burnRates[i],
-          mintInfo: mintInfos[i]
+          burnRate: getBurnRate(l.tokenId),
+          mintInfo: l
         }))
         .map(({ burnRate, mintInfo, id }) => ({
           id,
           cls: getClass(id, mintInfo.isLimited),
-          burnRate: mintInfo.isLimited ? burnRates[1] : burnRate,
+          burnRate: mintInfo.isLimited ? contractBurnRates?.[1] : burnRate,
           mintInfo,
           minted: true
         }))
@@ -128,7 +127,7 @@ const State = () => {
             acc[className] = { className, burned: burnRate, tokens: [id] };
           } else {
             acc[className].tokens.push(id);
-            acc[className].burned += acc[className].burned || 0;
+            acc[className].burned += burnRate;
           }
           return acc;
         },
@@ -148,6 +147,11 @@ const State = () => {
     )
   ]);
 
+  const aggregatedBurned = Object.values(xenfts).reduce(
+    (acc, { burned }) => acc + BigInt(burned),
+    0n
+  );
+
   const rows = [
     {
       id: 'XEN Crypto',
@@ -155,7 +159,7 @@ const State = () => {
       mint_cta: `https://xen.network/${networkId}/mint`,
       balance: xenBalance,
       burn_cta: 'Burn',
-      burned: xenBurned,
+      burned: xenBurned - aggregatedBurned,
       used_burns: '0',
       avail_burns: '0',
       burn_points: '0',
@@ -188,19 +192,21 @@ const State = () => {
       allocate_cta: 'Allocate',
       allocated: '0'
     },
-    ...Object.values(xenfts).map(({ className, burned, tokens }) => ({
-      id: `${className} XENFT`,
-      buy_cta: 'https://blur.io/eth/collection/xenft-by-xen-crypto',
-      mint_cta: 'Mint',
-      balance: BigInt(tokens.length) * 10n ** 18n,
-      burn_cta: undefined,
-      burned,
-      used_burns: '0',
-      avail_burns: '0',
-      burn_points: '0',
-      allocate_cta: 'Allocate',
-      allocated: '0'
-    }))
+    ...Object.values(xenfts)
+      .filter(({ className }) => className !== 'Collector')
+      .map(({ className, burned, tokens }) => ({
+        id: `${className} XENFT`,
+        buy_cta: 'https://blur.io/eth/collection/xenft-by-xen-crypto',
+        mint_cta: 'Mint',
+        balance: BigInt(tokens.length) * 10n ** 18n,
+        burn_cta: undefined,
+        burned,
+        used_burns: '0',
+        avail_burns: '0',
+        burn_points: '0',
+        allocate_cta: 'Allocate',
+        allocated: '0'
+      }))
   ];
 
   return <MoonPartyTable rows={rows} isFetching={isFetching} />;

@@ -70,7 +70,6 @@ export const XenTorrentProvider = ({ children, lowBurn = false }: any) => {
           ?.minterAddress as any),
     abi: torrentABI
   });
-
   const xenTorrentGenesisBlock = (chain: any) =>
     Object.values(supportedNetworks).find(n => Number(n?.chainId) === chain?.id)
       ?.xenTorrentGenesisBlock;

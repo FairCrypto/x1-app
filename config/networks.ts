@@ -83,7 +83,8 @@ const xenTorrentGenesisBlocks = {
   moonbase: 0,
   'evmos-testnet': 0,
   'fantom-testnet': 13958473,
-  'avalanche-testnet': 19655989
+  'avalanche-testnet': 19655989,
+  holesky: 2543227
 };
 
 const addresses = (config: NextConfig = {}, networkId: string = 'mainnet') => ({
@@ -357,6 +358,7 @@ const networkConfigs = ({ config = {} }: NextConfig): Record<string, TNetworkCon
 
   // TESTNETS
   // TODO: comment this section before deploying !!!
+  /*
   ganache: {
     isTestnet: true,
     chainId: `0x${(222222222).toString(16)}`,
@@ -383,6 +385,7 @@ const networkConfigs = ({ config = {} }: NextConfig): Record<string, TNetworkCon
     xenftMessage: config.xenftMessage?.goerli,
     ...addresses(config, 'goerli')
   },
+   */
   sepolia: {
     isTestnet: true,
     gasLimit: 30_000_000,
@@ -401,6 +404,24 @@ const networkConfigs = ({ config = {} }: NextConfig): Record<string, TNetworkCon
     logoUrl: '/logos/ethereum-logo.png',
     // xenftMessage: config.xenftMessage?.goerli,
     ...addresses(config, 'sepolia')
+  },
+  holesky: {
+    isTestnet: true,
+    gasLimit: 30_000_000,
+    safeMaxVMUs: 128,
+    chainId: '0x4268',
+    networkId: 'holesky',
+    name: 'Holesky Testnet',
+    currencyUnit: 'ETH',
+    wsURL:
+      'wss://holesky.infura.io/ws/v3/8d4ca703ac784214bcc33bfd7643f31f' ||
+      arrayOrString(config.wsUrlOverrides.sepolia),
+    rpcURL:
+      'https://holesky.infura.io/v3/8d4ca703ac784214bcc33bfd7643f31f' ||
+      arrayOrString(config.rpcUrlOverrides.sepolia),
+    explorerUrl: 'https://holesky.etherscan.io/',
+    logoUrl: '/logos/ethereum-logo.png',
+    ...addresses(config, 'holesky')
   },
   'bsc-testnet': {
     isTestnet: true,
