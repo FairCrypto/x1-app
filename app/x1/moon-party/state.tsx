@@ -50,8 +50,8 @@ const State = () => {
     fetchNextPageMintedTokenData
   } = useContext(XenTorrentContext);
   const { address, chain } = useAccount();
-  const xenBalance = xenUser[chain?.id as number]?.[address as string]?.balance;
-  const xenBurned = xenUser[chain?.id as number]?.[address as string]?.userBurns;
+  const xenBalance = xenUser[chain?.id as number]?.[address as string]?.balance || 0n;
+  const xenBurned = xenUser[chain?.id as number]?.[address as string]?.userBurns || 0n;
   // const ownedTokens = torrentUser[chain?.id as number]?.[address as string]?.ownedTokens || [];
   const mintedTokens = torrentUser[chain?.id as number]?.[address as string]?.mintedTokens || [];
   const tokenInfos = torrentUser[chain?.id as number]?.[address as string]?.tokens || {};
@@ -159,7 +159,7 @@ const State = () => {
       mint_cta: `https://xen.network/${networkId}/mint`,
       balance: xenBalance,
       burn_cta: 'Burn',
-      burned: xenBurned - aggregatedBurned,
+      burned: BigInt(xenBurned) - BigInt(aggregatedBurned),
       used_burns: '0',
       avail_burns: '0',
       burn_points: '0',
