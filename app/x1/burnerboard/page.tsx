@@ -2,7 +2,7 @@ import { Box, Typography } from '@mui/material';
 
 import Subheader from '@/app/x1/burnerboard/subheader';
 
-const Page = async () => (
+const Page = () => (
   <Box
     sx={{
       minHeight: '80vh',

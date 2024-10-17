@@ -63,7 +63,7 @@ export type TNetworkConfig = {
 
 const xenTorrentGenesisBlocks = {
   // mainnets
-  mainnet: 0,
+  mainnet: 16295439,
   bsc: 0,
   polygon: 0,
   avalanche: 0,
