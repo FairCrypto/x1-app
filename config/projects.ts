@@ -185,6 +185,42 @@ const projectConfig = {
     contracts: ['fenix'],
     envPrefix: ['FENIX_ADDRESS'],
     termsText: '/terms_community'
+  },
+  xone: {
+    isInternal: true,
+    name: 'XONE',
+    copyright: 'Copyright ©',
+    owner: 'Fair Crypto Foundation',
+    license: 'All Rights Reserved. ',
+    web: 'https://faircrypto.org',
+    twitter: 'https://twitter.com/XEN_Crypto',
+    telegram: 'https://t.me/XENCryptoTalk',
+    youtube: 'https://m.youtube.com/channel/UCiw5nyHHt9BPHvoRbcGNehA/playlists',
+    github: 'https://github.com/FairCrypto/XEN-Knights',
+    discord: 'https://discord.com/invite/rcAhrKWJb6',
+    reddit: 'https://www.reddit.com/r/xencrypto/',
+    logoUrl: '/favicon.ico',
+    contracts: ['xone'],
+    envPrefix: ['XONE_ADDRESS'],
+    termsText: '/terms'
+  },
+  vmpx: {
+    isInternal: true,
+    name: 'VMPX',
+    copyright: 'Copyright ©',
+    owner: 'Fair Crypto Foundation',
+    license: 'All Rights Reserved. ',
+    web: 'https://faircrypto.org',
+    twitter: 'https://twitter.com/XEN_Crypto',
+    telegram: 'https://t.me/XENCryptoTalk',
+    youtube: 'https://m.youtube.com/channel/UCiw5nyHHt9BPHvoRbcGNehA/playlists',
+    github: 'https://github.com/FairCrypto/XEN-Knights',
+    discord: 'https://discord.com/invite/rcAhrKWJb6',
+    reddit: 'https://www.reddit.com/r/xencrypto/',
+    logoUrl: '/favicon.ico',
+    contracts: ['vmpx'],
+    envPrefix: ['VMPX_ADDRESS'],
+    termsText: '/terms'
   }
 };
 

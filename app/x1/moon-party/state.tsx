@@ -6,9 +6,11 @@ import { useAccount } from 'wagmi';
 import MoonPartyTable from '@/app/x1/moon-party/table';
 import networks from '@/config/networks';
 import { ThemeContext } from '@/contexts/Theme';
+import { VmpxContext } from '@/contexts/VMPX';
 import { Web3Context } from '@/contexts/Web3';
 import { XenCryptoContext } from '@/contexts/XenCrypto';
 import { XenTorrentContext } from '@/contexts/XenTorrent';
+import { XoneContext } from '@/contexts/XONE';
 
 const XenftClasses = [
   {
@@ -41,16 +43,20 @@ type TokenInfo = {
 };
 
 const State = () => {
-  const { global: xen, user: xenUser, isFetching: isFetchingXen } = useContext(XenCryptoContext);
   const { safeRows: perPage } = useContext(ThemeContext);
+  const { global: xen, user: xenUser, isFetching: isFetchingXen } = useContext(XenCryptoContext);
   const {
     global: torrent,
     user: torrentUser,
     isFetching: isFetchingXenft,
     fetchNextPageMintedTokenData
   } = useContext(XenTorrentContext);
+  const { global: vmpxGlobal, user: vmpxUser } = useContext(VmpxContext);
+  const { global: xoneGlobal, user: xoneUser } = useContext(XoneContext);
   const { address, chain } = useAccount();
   const xenBalance = xenUser[chain?.id as number]?.[address as string]?.balance || 0n;
+  const vmpxBalance = vmpxUser[chain?.id as number]?.[address as string]?.balance || 0n;
+  const xoneBalance = xoneUser[chain?.id as number]?.[address as string]?.balance || 0n;
   const xenBurned = xenUser[chain?.id as number]?.[address as string]?.userBurns || 0n;
   // const ownedTokens = torrentUser[chain?.id as number]?.[address as string]?.ownedTokens || [];
   const mintedTokens = torrentUser[chain?.id as number]?.[address as string]?.mintedTokens || [];
@@ -170,7 +176,7 @@ const State = () => {
       id: 'eVMPX',
       buy_cta: 'https://app.uniswap.org/#/swap',
       mint_cta: undefined,
-      balance: 0,
+      balance: vmpxBalance,
       burn_cta: undefined,
       burned: 0,
       used_burns: '0',
@@ -183,7 +189,7 @@ const State = () => {
       id: 'XONE',
       buy_cta: 'https://app.uniswap.org/#/swap',
       mint_cta: undefined,
-      balance: 0,
+      balance: xoneBalance,
       burn_cta: undefined,
       burned: 0,
       used_burns: '0',

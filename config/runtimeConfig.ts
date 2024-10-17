@@ -15,12 +15,14 @@ import dxnToken from '../public/abi/DBXenERC20.json';
 import dbXenViews from '../public/abi/DBXenViews.json';
 import fenix from '../public/abi/Fenix.json';
 import hexABI from '../public/abi/HEX.json';
+import vmpx from '../public/abi/VMPX.json';
 import xenlonMars from '../public/abi/XenlonMars.json';
 import xlonToken from '../public/abi/XenlonMarsERC20.json';
 import xenTicker from '../public/abi/XENTicker.json';
 import tokenizer from '../public/abi/XENTokenizer.json';
 import varStaker from '../public/abi/XENVarStaker.json';
 import xHex from '../public/abi/XHeX.json';
+import xone from '../public/abi/XONE.json';
 import knightsRankings from '../public/knights/rankings.json';
 
 const contractInfo = (projects = {}) =>
@@ -73,6 +75,8 @@ export type TPublicRuntimeConfig = {
   xEthABI: Abi;
   xHexABI: Abi;
   hexABI: Abi;
+  vmpxABI: Abi;
+  xoneABI: Abi;
   defaultMarketplaceApiUrl: string;
   marketplaceApiUrl: Record<string, string>;
   defaultMarketplaceAssetUrl: string;
@@ -145,6 +149,8 @@ export const publicRuntimeConfig = {
   xEthABI: xEth.abi as Abi,
   xHexABI: xHex.abi as Abi,
   hexABI: hexABI as Abi,
+  vmpxABI: vmpx.abi as Abi,
+  xoneABI: xone.abi as Abi,
   defaultMarketplaceApiUrl: process.env.OPENSEA_API_URL,
   marketplaceApiUrl: (process.env.SUPPORTED_CHAINS || 'mainnet')
     .split(',')

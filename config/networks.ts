@@ -54,6 +54,8 @@ export type TNetworkConfig = {
   fenixAddress?: string | number | null;
   xEthAddress?: string | number | null;
   xHexAddress?: string | number | null;
+  xoneAddress?: string | number | null;
+  vmpxAddress?: string | number | null;
   xenftMessage?: string | null;
   allowedOps?: ContractOps[] | null;
   xenTorrentGenesisBlock?: number | bigint | string | null;
@@ -105,6 +107,8 @@ const addresses = (config: NextConfig = {}, networkId: string = 'mainnet') => ({
   fenixAddress: config.fenixAddress[networkId],
   xEthAddress: config.xEthAddress[networkId],
   xHexAddress: config.xHexAddress[networkId],
+  xoneAddress: config.xoneAddress[networkId],
+  vmpxAddress: config.vmpxAddress[networkId],
   xenTorrentGenesisBlock: xenTorrentGenesisBlocks[networkId]
 });
 
@@ -118,9 +122,8 @@ const networkConfigs = ({ config = {} }: NextConfig): Record<string, TNetworkCon
     currencyUnit: 'ETH',
     gasLimit: 30_000_000,
     safeMaxVMUs: 128,
-    wsURL: arrayOrString(config.wsUrlOverrides?.mainnet) || `wss://ethereum-mainnet.infrafc.org`,
-    rpcURL:
-      arrayOrString(config.rpcUrlOverrides?.mainnet) || `https://ethereum-mainnet.infrafc.org`,
+    wsURL: arrayOrString(config.wsUrlOverrides?.mainnet),
+    rpcURL: arrayOrString(config.rpcUrlOverrides?.mainnet),
     wsURLBTest: arrayOrString(config.wsUrlOverridesBTest?.mainnet),
     rpcURLBTest: arrayOrString(config.rpcUrlOverridesBTest?.mainnet),
     explorerUrl: 'https://etherscan.io/',
@@ -328,9 +331,7 @@ const networkConfigs = ({ config = {} }: NextConfig): Record<string, TNetworkCon
     gasLimit: 30_000_000,
     safeMaxVMUs: 128,
     wsURL: arrayOrString(config.wsUrlOverrides?.optimism),
-    rpcURL:
-      arrayOrString(config.rpcUrlOverrides?.optimism) ||
-      'https://optimism-mainnet.infura.io/v3/3e8615a3d89b49f381108b46b52f9712',
+    rpcURL: arrayOrString(config.rpcUrlOverrides?.optimism),
     wsURLBTest: arrayOrString(config.wsUrlOverridesBTest?.optimism),
     rpcURLBTest: arrayOrString(config.rpcUrlOverridesBTest?.optimism),
     explorerUrl: 'https://optimistic.etherscan.io/',
@@ -357,35 +358,6 @@ const networkConfigs = ({ config = {} }: NextConfig): Record<string, TNetworkCon
   },
 
   // TESTNETS
-  // TODO: comment this section before deploying !!!
-  /*
-  ganache: {
-    isTestnet: true,
-    chainId: `0x${(222222222).toString(16)}`,
-    networkId: 'ganache',
-    name: 'Ganache',
-    wsURL: arrayOrString(config.wsUrlOverrides?.ganache) || `ws://localhost:8545`,
-    rpcURL: arrayOrString(config.rpcUrlOverrides?.ganache) || `http://localhost:8545`,
-    explorerUrl: '',
-    logoUrl: '',
-    ...addresses(config, 'ganache')
-  },
-  goerli: {
-    isTestnet: true,
-    gasLimit: 30_000_000,
-    safeMaxVMUs: 128,
-    chainId: '0x5',
-    networkId: 'goerli',
-    name: 'Goerli Testnet',
-    currencyUnit: 'ETH',
-    wsURL: arrayOrString(config.wsUrlOverrides?.goerli) || `wss://goerli.fc-internal.com`,
-    rpcURL: arrayOrString(config.rpcUrlOverrides?.goerli) || `https://goerli.fc-internal.com`,
-    explorerUrl: 'https://goerli.etherscan.io/',
-    logoUrl: '/logos/ethereum-logo.png',
-    xenftMessage: config.xenftMessage?.goerli,
-    ...addresses(config, 'goerli')
-  },
-   */
   sepolia: {
     isTestnet: true,
     gasLimit: 30_000_000,
@@ -394,12 +366,8 @@ const networkConfigs = ({ config = {} }: NextConfig): Record<string, TNetworkCon
     networkId: 'sepolia',
     name: 'Sepolia Testnet',
     currencyUnit: 'SEP',
-    wsURL:
-      'wss://sepolia.infura.io/ws/v3/8d4ca703ac784214bcc33bfd7643f31f' ||
-      arrayOrString(config.wsUrlOverrides?.sepolia),
-    rpcURL:
-      'https://sepolia.infura.io/v3/8d4ca703ac784214bcc33bfd7643f31f' ||
-      arrayOrString(config.rpcUrlOverrides?.sepolia),
+    wsURL: arrayOrString(config.wsUrlOverrides?.sepolia),
+    rpcURL: arrayOrString(config.rpcUrlOverrides?.sepolia),
     explorerUrl: 'https://sepolia.etherscan.io/',
     logoUrl: '/logos/ethereum-logo.png',
     // xenftMessage: config.xenftMessage?.goerli,
@@ -413,12 +381,8 @@ const networkConfigs = ({ config = {} }: NextConfig): Record<string, TNetworkCon
     networkId: 'holesky',
     name: 'Holesky Testnet',
     currencyUnit: 'ETH',
-    wsURL:
-      'wss://holesky.infura.io/ws/v3/8d4ca703ac784214bcc33bfd7643f31f' ||
-      arrayOrString(config.wsUrlOverrides.sepolia),
-    rpcURL:
-      'https://holesky.infura.io/v3/8d4ca703ac784214bcc33bfd7643f31f' ||
-      arrayOrString(config.rpcUrlOverrides.sepolia),
+    wsURL: arrayOrString(config.wsUrlOverrides.sepolia),
+    rpcURL: arrayOrString(config.rpcUrlOverrides.sepolia),
     explorerUrl: 'https://holesky.etherscan.io/',
     logoUrl: '/logos/ethereum-logo.png',
     ...addresses(config, 'holesky')
@@ -477,13 +441,8 @@ const networkConfigs = ({ config = {} }: NextConfig): Record<string, TNetworkCon
     networkId: 'mumbai',
     name: 'Mumbai Testnet',
     currencyUnit: 'MATIC',
-    wsURL:
-      'wss://polygon-mumbai.infura.io/ws/v3/8d4ca703ac784214bcc33bfd7643f31f' ||
-      arrayOrString(config.wsUrlOverrides?.mumbai),
-    // || 'wss://mumbai.fc-internal.com'
-    rpcURL:
-      'https://polygon-mumbai.infura.io/v3/8d4ca703ac784214bcc33bfd7643f31f' ||
-      arrayOrString(config.rpcUrlOverrides?.mumbai),
+    wsURL: arrayOrString(config.wsUrlOverrides?.mumbai),
+    rpcURL: arrayOrString(config.rpcUrlOverrides?.mumbai),
     explorerUrl: 'https://mumbai.polygonscan.com/',
     logoUrl: '/logos/polygon-logo.png',
     xenftMessage: config.xenftMessage?.mumbai,
@@ -545,11 +504,8 @@ const networkConfigs = ({ config = {} }: NextConfig): Record<string, TNetworkCon
     safeMaxVMUs: 42,
     gasLimit: 8_000_000,
     currencyUnit: 'AVAX',
-    wsURL:
-      'wss://avalanche-fuji.infura.io/ws/v3/8d4ca703ac784214bcc33bfd7643f31f' ||
-      arrayOrString(config.wsUrlOverrides['avalanche-testnet']),
+    wsURL: arrayOrString(config.wsUrlOverrides['avalanche-testnet']),
     rpcURL:
-      'https://avalanche-fuji.infura.io/v3/8d4ca703ac784214bcc33bfd7643f31f' ||
       arrayOrString(config.rpcUrlOverrides['avalanche-testnet']) ||
       'https://rpc.ankr.com/avalanche_fuji',
     explorerUrl: 'https://testnet.snowtrace.io/',
@@ -566,9 +522,7 @@ const networkConfigs = ({ config = {} }: NextConfig): Record<string, TNetworkCon
     gasLimit: 30_000_000,
     safeMaxVMUs: 120,
     wsURL: arrayOrString(config.wsUrlOverrides?.optimism_goerli),
-    rpcURL:
-      arrayOrString(config.rpcUrlOverrides?.optimism_goerli) ||
-      'https://optimism-goerli.infura.io/v3/3e8615a3d89b49f381108b46b52f9712',
+    rpcURL: arrayOrString(config.rpcUrlOverrides?.optimism_goerli),
     explorerUrl: 'https://goerli-optimism.etherscan.io/',
     logoUrl: '/logos/optimism-logo.png',
     xenftMessage: config.xenftMessage?.optimism_goerli,
@@ -583,9 +537,7 @@ const networkConfigs = ({ config = {} }: NextConfig): Record<string, TNetworkCon
     gasLimit: 30_000_000,
     safeMaxVMUs: 128,
     wsURL: arrayOrString(config.wsUrlOverrides?.arbitrum_goerli),
-    rpcURL:
-      arrayOrString(config.rpcUrlOverrides?.arbitrum_goerli) ||
-      'https://arbitrum-goerli.infura.io/v3/0c4485eb5a0f416d9beb05cd14efd01a',
+    rpcURL: arrayOrString(config.rpcUrlOverrides?.arbitrum_goerli),
     explorerUrl: 'https://goerli.arbiscan.io/',
     logoUrl: '/logos/arbitrum-logo.png',
     xenftMessage: config.xenftMessage?.arbitrum_goerli,
@@ -605,99 +557,6 @@ const networkConfigs = ({ config = {} }: NextConfig): Record<string, TNetworkCon
     logoUrl: '/logos/base-logo.svg',
     xenftMessage: config.xenftMessage?.base_goerli,
     ...addresses(config, 'base_goerli')
-  },
-
-  // devnet
-  x1: {
-    isTestnet: false,
-    gasLimit: 30_000_000,
-    safeMaxVMUs: 128,
-    chainId: '0x315e4',
-    networkId: 'x1',
-    name: 'X1 Devnet',
-    currencyUnit: 'XN',
-    wsURL: arrayOrString(config.wsUrlOverrides?.x1) || `wss://x1-devnet.xen.network/ws`,
-    rpcURL: arrayOrString(config.rpcUrlOverrides?.x1) || `https://x1-devnet.xen.network`,
-    explorerUrl: 'https://explorer.x1-devnet.xen.network/',
-    logoUrl: '/XEN-logo-square-light 512x512.png',
-    xenftMessage: config.xenftMessage?.x1,
-    ...addresses(config, 'x1')
-  },
-  // fastnet
-  fastnet: {
-    isTestnet: true,
-    safeMaxVMUs: 43,
-    gasLimit: 10_000_000,
-    chainId: `0x${(4003).toString(16)}`,
-    networkId: 'fastnet',
-    name: 'X1 Fastnet',
-    currencyUnit: 'XN',
-    wsURL: arrayOrString(config.wsUrlOverrides?.fastnet) || `wss://x1-fastnet.infrafc.org/ws`,
-    rpcURL: arrayOrString(config.rpcUrlOverrides?.fastnet) || `https://x1-fastnet.infrafc.org`,
-    explorerUrl: 'https://explorer.x1-fastnet.infrafc.org/',
-    logoUrl: '/XEN-logo-square-light 512x512.png',
-    xenftMessage: config.xenftMessage?.fastnet,
-    ...addresses(config, 'fastnet')
-  },
-  x1_fastnet: {
-    isTestnet: false,
-    safeMaxVMUs: 43,
-    gasLimit: 10_000_000,
-    chainId: `0x${(4003).toString(16)}`,
-    networkId: 'x1_fastnet',
-    name: 'X1 Fastnet',
-    currencyUnit: 'XN',
-    wsURL: arrayOrString(config.wsUrlOverrides?.x1_fastnet) || `wss://x1-fastnet.infrafc.org/ws`,
-    rpcURL: arrayOrString(config.rpcUrlOverrides?.x1_fastnet) || `https://x1-fastnet.infrafc.org`,
-    explorerUrl: 'https://explorer.x1-fastnet.infrafc.org/',
-    logoUrl: '/XEN-logo-square-light 512x512.png',
-    xenftMessage: config.xenftMessage?.x1_fastnet,
-    ...addresses(config, 'x1_fastnet')
-  },
-  baby_x1: {
-    isTestnet: true,
-    gasLimit: 30_000_000,
-    safeMaxVMUs: 128,
-    chainId: '0x315e4',
-    networkId: 'baby_x1',
-    name: 'X1 Devnet',
-    currencyUnit: 'XN',
-    wsURL: arrayOrString(config.wsUrlOverrides?.baby_x1) || `wss://x1-devnet.xen.network/ws`,
-    rpcURL: arrayOrString(config.rpcUrlOverrides?.baby_x1) || `https://x1-devnet.xen.network`,
-    explorerUrl: 'https://explorer.x1-devnet.xen.network/',
-    logoUrl: '/XEN-logo-square-light 512x512.png',
-    xenftMessage: config.xenftMessage?.baby_x1,
-    ...addresses(config, 'baby_x1')
-  },
-  testnet: {
-    isTestnet: true,
-    safeMaxVMUs: 43,
-    gasLimit: 10_000_000,
-    chainId: `0x${(204005).toString(16)}`,
-    networkId: 'testnet',
-    name: 'X1 Testnet',
-    currencyUnit: 'XN',
-    wsURL: arrayOrString(config.wsUrlOverrides?.testnet) || `wss://x1-testnet.xen.network/ws`,
-    rpcURL: arrayOrString(config.rpcUrlOverrides?.testnet) || `https://x1-testnet.xen.network`,
-    explorerUrl: 'https://explorer.x1-testnet.xen.network/',
-    logoUrl: '/XEN-logo-square-light 512x512.png',
-    xenftMessage: config.xenftMessage?.testnet,
-    ...addresses(config, 'testnet')
-  },
-  x1_testnet: {
-    isTestnet: false,
-    safeMaxVMUs: 43,
-    gasLimit: 10_000_000,
-    chainId: `0x${(204005).toString(16)}`,
-    networkId: 'x1_testnet',
-    name: 'X1 Testnet',
-    currencyUnit: 'XN',
-    wsURL: arrayOrString(config.wsUrlOverrides?.x1_testnet) || `wss://x1-testnet.xen.network/ws`,
-    rpcURL: arrayOrString(config.rpcUrlOverrides?.x1_testnet) || `https://x1-testnet.xen.network`,
-    explorerUrl: 'https://explorer.x1-testnet.xen.network/',
-    logoUrl: '/XEN-logo-square-light 512x512.png',
-    xenftMessage: config.xenftMessage?.x1_testnet,
-    ...addresses(config, 'x1_testnet')
   }
 });
 
