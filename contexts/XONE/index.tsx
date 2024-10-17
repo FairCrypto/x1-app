@@ -48,6 +48,9 @@ export const XoneProvider = ({ children }: any) => {
   });
 
   useEffect(() => {
+    if (!xoneGlobal) return;
+
+    console.log('xoneGlobal', xoneGlobal);
     const [{ result: cap }, { result: totalSupply }, { result: startBlockNumber }] =
       xoneGlobal as any;
     setGlobal(g => ({
@@ -70,6 +73,8 @@ export const XoneProvider = ({ children }: any) => {
   });
 
   useEffect(() => {
+    if (!userBalance) return;
+
     setUser(g => ({
       ...g,
       [chain?.id!]: {
@@ -91,6 +96,8 @@ export const XoneProvider = ({ children }: any) => {
   });
 
   useEffect(() => {
+    if (!userMints) return;
+
     setUser(g => ({
       ...g,
       [chain?.id!]: {
