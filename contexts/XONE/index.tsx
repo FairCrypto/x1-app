@@ -1,3 +1,5 @@
+'use client';
+
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useAccount, useReadContract, useReadContracts } from 'wagmi';
 import type { Chain } from 'wagmi/chains';
