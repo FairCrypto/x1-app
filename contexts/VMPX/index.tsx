@@ -50,6 +50,8 @@ export const VmpxProvider = ({ children }: any) => {
   });
 
   useEffect(() => {
+    if (!globalState) return;
+
     const [
       { result: cap },
       { result: cycles },
@@ -81,6 +83,8 @@ export const VmpxProvider = ({ children }: any) => {
   });
 
   useEffect(() => {
+    if (!userBalance) return;
+
     setUser(g => ({
       ...g,
       [chain?.id!]: {

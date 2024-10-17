@@ -7,14 +7,20 @@ const wei = 1_000_000_000_000_000_000n;
 const fmtBigInt = (v: bigint | null | undefined) => (BigInt(v ?? 0n) / wei).toLocaleString();
 
 const columns: GridColDef[] = [
-  { field: 'id', headerName: 'Asset', width: 200 },
+  { field: 'id', headerName: 'Asset', width: 180 },
   {
     field: 'buy_cta',
     headerName: 'Buy',
     width: 100,
     renderCell: item =>
       item.value && (
-        <Button href={item.value} target="_blank" endIcon={<LaunchIcon fontSize="small" />}>
+        <Button
+          size="small"
+          variant="outlined"
+          href={item.value}
+          target="_blank"
+          endIcon={<LaunchIcon fontSize="small" />}
+        >
           Buy
         </Button>
       )
@@ -25,7 +31,13 @@ const columns: GridColDef[] = [
     width: 100,
     renderCell: item =>
       item.value && (
-        <Button href={item.value} target="_blank" endIcon={<LaunchIcon fontSize="small" />}>
+        <Button
+          size="small"
+          variant="outlined"
+          href={item.value}
+          target="_blank"
+          endIcon={<LaunchIcon fontSize="small" />}
+        >
           Mint
         </Button>
       )
@@ -42,7 +54,12 @@ const columns: GridColDef[] = [
     field: 'burn_cta',
     headerName: 'Burn',
     width: 100,
-    renderCell: item => item.value && <Button>{item.value}</Button>
+    renderCell: item =>
+      item.value && (
+        <Button size="small" variant="outlined">
+          {item.value}
+        </Button>
+      )
   },
   {
     field: 'burned',
@@ -52,14 +69,18 @@ const columns: GridColDef[] = [
     align: 'right',
     valueFormatter: ({ value }) => fmtBigInt(value)
   },
-  { field: 'used_burns', headerName: 'Used Burns', width: 100 },
-  { field: 'avail_burns', headerName: 'Avail Burns', width: 100 },
-  { field: 'burn_points', headerName: 'Burn Points', width: 100 },
+  { field: 'used_burns', headerName: 'Used Burns', width: 120 },
+  { field: 'avail_burns', headerName: 'Avail Burns', width: 120 },
+  { field: 'burn_points', headerName: 'Burn Points', width: 120 },
   {
     field: 'allocate_cta',
     headerName: 'Allocate',
-    width: 100,
-    renderCell: item => <Button>{item.value}</Button>
+    width: 120,
+    renderCell: item => (
+      <Button size="small" variant="outlined">
+        {item.value}
+      </Button>
+    )
   },
   { field: 'allocated', headerName: 'Allocated', width: 100 }
 ];
