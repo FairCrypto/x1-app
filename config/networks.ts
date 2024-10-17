@@ -370,7 +370,6 @@ const networkConfigs = ({ config = {} }: NextConfig): Record<string, TNetworkCon
     rpcURL: arrayOrString(config.rpcUrlOverrides?.sepolia),
     explorerUrl: 'https://sepolia.etherscan.io/',
     logoUrl: '/logos/ethereum-logo.png',
-    // xenftMessage: config.xenftMessage?.goerli,
     ...addresses(config, 'sepolia')
   },
   holesky: {
@@ -512,51 +511,6 @@ const networkConfigs = ({ config = {} }: NextConfig): Record<string, TNetworkCon
     logoUrl: '/logos/avalanche-logo.png',
     xenftMessage: config.xenftMessage['avalanche-testnet'],
     ...addresses(config, 'avalanche-testnet')
-  },
-  optimism_goerli: {
-    isTestnet: true,
-    chainId: '0x1a4',
-    networkId: 'optimism_goerli',
-    currencyUnit: 'ETH',
-    name: 'Optimism Goerli',
-    gasLimit: 30_000_000,
-    safeMaxVMUs: 120,
-    wsURL: arrayOrString(config.wsUrlOverrides?.optimism_goerli),
-    rpcURL: arrayOrString(config.rpcUrlOverrides?.optimism_goerli),
-    explorerUrl: 'https://goerli-optimism.etherscan.io/',
-    logoUrl: '/logos/optimism-logo.png',
-    xenftMessage: config.xenftMessage?.optimism_goerli,
-    ...addresses(config, 'optimism_goerli')
-  },
-  arbitrum_goerli: {
-    isTestnet: true,
-    chainId: '0x66eed',
-    networkId: 'arbitrum_goerli',
-    currencyUnit: 'AGOR',
-    name: 'Arbitrum Goerli',
-    gasLimit: 30_000_000,
-    safeMaxVMUs: 128,
-    wsURL: arrayOrString(config.wsUrlOverrides?.arbitrum_goerli),
-    rpcURL: arrayOrString(config.rpcUrlOverrides?.arbitrum_goerli),
-    explorerUrl: 'https://goerli.arbiscan.io/',
-    logoUrl: '/logos/arbitrum-logo.png',
-    xenftMessage: config.xenftMessage?.arbitrum_goerli,
-    ...addresses(config, 'arbitrum_goerli')
-  },
-  base_goerli: {
-    isTestnet: true,
-    chainId: '0x14a33',
-    networkId: 'base_goerli',
-    currencyUnit: 'ETH',
-    name: 'Base Goerli',
-    gasLimit: 25_000_000,
-    safeMaxVMUs: 105,
-    wsURL: arrayOrString(config.wsUrlOverrides?.base_goerli),
-    rpcURL: arrayOrString(config.rpcUrlOverrides?.base_goerli) || 'https://goerli.base.org',
-    explorerUrl: 'https://goerli.basescan.org/',
-    logoUrl: '/logos/base-logo.svg',
-    xenftMessage: config.xenftMessage?.base_goerli,
-    ...addresses(config, 'base_goerli')
   }
 });
 
