@@ -13,11 +13,6 @@ export const nextConfig = {
         source: '/terms.html',
         destination: `/terms`,
         permanent: true
-      },
-      {
-        source: '/:networkId/xenft',
-        destination: '/:networkId/xenft/torrent',
-        permanent: true
       }
     ];
   },
@@ -48,15 +43,17 @@ export default withSentryConfig(
     widenClientFileUpload: true,
 
     // Transpiles SDK to be compatible with IE11 (increases bundle size)
-    transpileClientSDK: true,
+    transpileClientSDK: false,
 
     // Routes browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers (increases server load)
-    tunnelRoute: '/monitoring',
+    // tunnelRoute: '/monitoring',
 
     // Hides source maps from generated client bundles
     hideSourceMaps: true,
 
     // Automatically tree-shake Sentry logger statements to reduce bundle size
-    disableLogger: true
+    disableLogger: true,
+
+    automaticVercelMonitors: false
   }
 );
