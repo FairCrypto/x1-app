@@ -22,7 +22,7 @@ export const VmpxContext = createContext<TVmpxContext>(initialValue);
 export const VmpxProvider = ({ children }: any) => {
   const publicRuntimeConfig = useContext(Web3Context);
   const supportedNetworks = networks({ config: publicRuntimeConfig });
-  const contractABI = publicRuntimeConfig.vmpxABI;
+  const { vmpxABI } = publicRuntimeConfig;
 
   const [global, setGlobal] = useState<Record<number, TVmpx>>({} as any);
   const [user, setUser] = useState<Record<number, Record<string, TVmpxUser>>>({} as any);
@@ -30,8 +30,8 @@ export const VmpxProvider = ({ children }: any) => {
 
   const vmpxContract = (chain: (Chain & { unsupported?: boolean | undefined }) | undefined) => ({
     address: Object.values(supportedNetworks).find(n => Number(n?.chainId) === chain?.id)
-      ?.contractAddress as any,
-    abi: contractABI
+      ?.vmpxAddress as any,
+    abi: vmpxABI
   });
 
   const {
