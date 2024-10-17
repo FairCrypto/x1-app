@@ -1,3 +1,5 @@
+'use client';
+
 import LaunchIcon from '@mui/icons-material/Launch';
 import { Button } from '@mui/material';
 import { DataGrid, type GridColDef } from '@mui/x-data-grid';

@@ -4,7 +4,7 @@ import State from '@/app/x1/moon-party/state';
 
 import Subheader from './subheader';
 
-const Page = () => (
+const Page = async () => (
   <Box
     sx={{
       minHeight: '80vh',
