@@ -1,3 +1,5 @@
+'use client';
+
 import { Connection } from '@solana/web3.js';
 import type RpcWebSocketClient from '@solana/web3.js/src/rpc-websocket';
 import { useEffect, useState } from 'react';

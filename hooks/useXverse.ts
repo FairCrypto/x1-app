@@ -1,3 +1,5 @@
+'use client';
+
 import type { Provider } from '@sats-connect/core';
 import { AddressPurpose, getProviders, request } from '@sats-connect/core';
 import { useEffect, useState } from 'react';

@@ -84,19 +84,29 @@ export const overrides = (mode: string) =>
       }
     : {
         palette: {
-          primary: {
-            main: '#00FF41'
-          },
           text: {
-            primary: '#00FF41',
-            secondary: '#008F11',
-            disabled: '#003B00'
+            primary: '#fff',
+            secondary: '#ccc'
           },
-          background: {
-            default: '#0D0208'
+          primary: {
+            main: '#3070F6',
+            contrastText: '#fff'
+          },
+          action: {
+            background: '#3070F6'
           }
         },
         components: {
+          muiButton: {
+            styleOverrides: {
+              root: {
+                // textTransform: 'none'
+                '& .MuiButton-colorPrimary': {
+                  color: '#fff'
+                }
+              }
+            }
+          },
           MuiPaper: {
             styleOverrides: {
               root: {

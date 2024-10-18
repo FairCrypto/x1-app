@@ -1,3 +1,5 @@
+'use client';
+
 import useSWRInfinite from 'swr/infinite';
 
 import type { TBRCAsset, TInscription } from '@/contexts/Btc/types';

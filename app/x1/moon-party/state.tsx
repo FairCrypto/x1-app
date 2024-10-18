@@ -160,9 +160,12 @@ const State = () => {
 
   const rows = [
     {
+      contract: 'contractAddress',
       id: 'XEN Crypto',
-      buy_cta: 'https://app.uniswap.org/#/swap',
-      mint_cta: `https://xen.network/${networkId}/mint`,
+      acquire: {
+        buy: 'https://app.uniswap.org/#/swap',
+        mint: `https://xen.network/${networkId}/mint`
+      },
       balance: xenBalance,
       burn_cta: 'Burn',
       burned: BigInt(xenBurned) - BigInt(aggregatedBurned),
@@ -173,9 +176,11 @@ const State = () => {
       allocated: '0'
     },
     {
+      contract: 'vmpxAddress',
       id: 'eVMPX',
-      buy_cta: 'https://app.uniswap.org/#/swap',
-      mint_cta: undefined,
+      acquire: {
+        buy: 'https://app.uniswap.org/#/swap'
+      },
       balance: vmpxBalance,
       burn_cta: undefined,
       burned: 0,
@@ -186,9 +191,11 @@ const State = () => {
       allocated: '0'
     },
     {
+      contract: 'xoneAddress',
       id: 'XONE',
-      buy_cta: 'https://app.uniswap.org/#/swap',
-      mint_cta: undefined,
+      acquire: {
+        buy: 'https://app.uniswap.org/#/swap'
+      },
       balance: xoneBalance,
       burn_cta: undefined,
       burned: 0,
@@ -201,9 +208,12 @@ const State = () => {
     ...Object.values(xenfts)
       .filter(({ className }) => className !== 'Collector')
       .map(({ className, burned, tokens }) => ({
+        contract: 'minterAddress',
         id: `${className} XENFT`,
-        buy_cta: 'https://blur.io/eth/collection/xenft-by-xen-crypto',
-        mint_cta: 'Mint',
+        acquire: {
+          buy: 'https://blur.io/eth/collection/xenft-by-xen-crypto',
+          mint: `https://xen.network/${networkId}/mint`
+        },
         balance: BigInt(tokens.length) * 10n ** 18n,
         burn_cta: undefined,
         burned,
@@ -213,7 +223,7 @@ const State = () => {
         allocate_cta: 'Allocate',
         allocated: '0'
       }))
-  ];
+  ].filter(({ contract }) => currentNetwork?.[contract]);
 
   return <MoonPartyTable rows={rows} isFetching={isFetching} />;
 };

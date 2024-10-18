@@ -1,3 +1,5 @@
+'use client';
+
 import type EventEmitter from 'node:events';
 
 import { useEffect, useState } from 'react';

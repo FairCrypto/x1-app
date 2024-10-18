@@ -1,6 +1,7 @@
 'use client';
 
 import { Container, Toolbar, Typography } from '@mui/material';
+import Image from 'next/image';
 import React, { useContext } from 'react';
 
 import { NotificationsContext } from '@/contexts/Notifications';
@@ -29,11 +30,13 @@ const Subheader = () => {
     >
       <Toolbar
         sx={{
+          px: 0,
           width: '100vw',
           display: 'flex',
           flexDirection: 'row'
         }}
       >
+        <Image src="/x1-logo.png" alt="X1 Logo" width={40} height={40} />
         <Typography
           sx={{
             // width: '20%',
@@ -43,7 +46,7 @@ const Subheader = () => {
           }}
           variant="h5"
         >
-          X1 Moon Party
+          Moon Party
         </Typography>
       </Toolbar>
     </Container>

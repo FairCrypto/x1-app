@@ -2,30 +2,12 @@
 
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import MenuIcon from '@mui/icons-material/Menu';
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  AppBar,
-  Box,
-  Divider,
-  IconButton,
-  Menu,
-  MenuItem,
-  Stack,
-  Toolbar,
-  Tooltip
-} from '@mui/material';
+import { AppBar, IconButton, Stack, Toolbar, Tooltip, Typography } from '@mui/material';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useContext, useState } from 'react';
 
-import { LinkTab } from '@/components/applicationBar/LinkTab';
-import { StyledButton } from '@/components/applicationBar/StyledButton';
-import { linkTabs } from '@/config/linkTabs';
-import type { LinkTabProps } from '@/config/types';
 import { ThemeContext } from '@/contexts/Theme';
 
 import Alerts from '../alerts';
@@ -74,109 +56,19 @@ const ApplicationBar = () => {
     <AppBar position="fixed" elevation={0}>
       <Alerts />
       <Toolbar sx={{}}>
-        {/* false && <XENIconButton networkId={networkId} mode={mode} /> */}
-        <IconButton
-          sx={{ display: { xs: 'inline-flex', lg: 'none' } }}
-          aria-controls={open ? 'navigation-menu' : undefined}
-          aria-haspopup="true"
-          aria-expanded={open ? 'true' : undefined}
-          onClick={handleClick}
-        >
-          <MenuIcon />
-        </IconButton>
-        <Menu
-          open={open}
-          role="navigation"
-          anchorEl={anchorEl}
-          id="navigation-menu"
-          sx={{ '& .MuiMenu-paper': { width: '200px' } }}
-          onClose={handleClose(null)}
-          onClick={handleClose(null)}
-        >
-          {linkTabs()
-            .filter((tab: LinkTabProps) => tab.href || tab.items)
-            .map((tab: LinkTabProps) => {
-              if (tab.href) {
-                return (
-                  <MenuItem
-                    key={tab.value}
-                    selected={path === tab.href}
-                    onClick={handleClose(tab.href)}
-                  >
-                    {tab.label}
-                  </MenuItem>
-                );
-              }
-              return (
-                <div key={tab.value}>
-                  <Divider />
-                  <Accordion
-                    expanded={expanded === tab.value}
-                    disableGutters
-                    elevation={0}
-                    key={`acc-${tab.value}`}
-                    onChange={handleChange(tab.value as string)}
-                    sx={{
-                      padding: 0,
-                      border: 0,
-                      borderBottom: 0,
-                      backgroundColor: 'transparent',
-                      '&:before': {
-                        display: 'none'
-                      }
-                    }}
-                  >
-                    <AccordionSummary
-                      expandIcon={<ExpandMoreIcon />}
-                      aria-controls="panel1a-content"
-                      id="panel1a-header"
-                      sx={{ padding: '0 auto 0 0' }}
-                    >
-                      <MenuItem
-                        disableGutters
-                        component="span"
-                        sx={{
-                          width: '100%',
-                          '&:hover': {
-                            backgroundColor: 'transparent'
-                          }
-                        }}
-                        key={tab.value}
-                      >
-                        {tab.label}
-                      </MenuItem>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                      {tab.items &&
-                        tab.items.map((item: LinkTabProps) => (
-                          <StyledButton
-                            key={item.label}
-                            props={{ ...item, mode }}
-                            is_current={false}
-                          />
-                        ))}
-                    </AccordionDetails>
-                  </Accordion>
-                </div>
-              );
-            })}
-        </Menu>
-        <Stack direction="row" sx={{ flexGrow: 1 }}>
-          <Box role="navigation" sx={{ display: { xs: 'none', lg: 'block' } }}>
-            {linkTabs().map((tab: any) => (
-              <LinkTab
-                // theme={theme}
-                key={tab.value}
-                label={tab.label}
-                value={tab.value}
-                href={tab.href}
-                items={tab.items}
-                menuEl={projectEl}
-                setMenuEl={setProjectEl}
-                current={path as string}
-              />
-            ))}
-          </Box>
+        <Stack direction="row" sx={{ flexGrow: 1, alignItems: 'center' }}>
+          <Image src="/x1-logo.png" alt="X1 Logo" width={40} height={40} />
+          <Typography
+            sx={{
+              // width: '20%',
+              margin: '0 ',
+              marginLeft: 1,
+              fontWeight: 'bold'
+            }}
+            variant="h5"
+          >
+            Moon Party
+          </Typography>
         </Stack>
         <Tooltip title="Toggle light/dark mode">
           <IconButton sx={{ ml: 1 }} onClick={toggleTheme} color="inherit">

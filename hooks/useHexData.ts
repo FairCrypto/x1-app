@@ -1,3 +1,5 @@
+'use client';
+
 import useSwr from 'swr';
 // import * as Sentry from '@sentry/nextjs';
 

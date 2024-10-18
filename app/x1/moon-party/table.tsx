@@ -9,39 +9,39 @@ const wei = 1_000_000_000_000_000_000n;
 const fmtBigInt = (v: bigint | null | undefined) => (BigInt(v ?? 0n) / wei).toLocaleString();
 
 const columns: GridColDef[] = [
-  { field: 'id', headerName: 'Asset', width: 180 },
+  { field: 'id', headerName: 'Asset', width: 150 },
   {
-    field: 'buy_cta',
-    headerName: 'Buy',
-    width: 100,
+    field: 'acquire',
+    headerName: 'Acquire',
+    width: 200,
     renderCell: item =>
       item.value && (
-        <Button
-          size="small"
-          variant="outlined"
-          href={item.value}
-          target="_blank"
-          endIcon={<LaunchIcon fontSize="small" />}
-        >
-          Buy
-        </Button>
-      )
-  },
-  {
-    field: 'mint_cta',
-    headerName: 'Mint',
-    width: 100,
-    renderCell: item =>
-      item.value && (
-        <Button
-          size="small"
-          variant="outlined"
-          href={item.value}
-          target="_blank"
-          endIcon={<LaunchIcon fontSize="small" />}
-        >
-          Mint
-        </Button>
+        <>
+          {item.value.buy && (
+            <Button
+              size="small"
+              variant="outlined"
+              href={item.value.buy}
+              target="_blank"
+              sx={{ borderRadius: 25, mr: 1, textTransform: 'capitalize' }}
+              endIcon={<LaunchIcon fontSize="small" />}
+            >
+              Buy
+            </Button>
+          )}
+          {item.value.mint && (
+            <Button
+              size="small"
+              variant="outlined"
+              href={item.value.mint}
+              target="_blank"
+              sx={{ borderRadius: 25, textTransform: 'capitalize' }}
+              endIcon={<LaunchIcon fontSize="small" />}
+            >
+              Mint
+            </Button>
+          )}
+        </>
       )
   },
   {
@@ -58,7 +58,11 @@ const columns: GridColDef[] = [
     width: 100,
     renderCell: item =>
       item.value && (
-        <Button size="small" variant="outlined">
+        <Button
+          size="small"
+          variant="contained"
+          sx={{ borderRadius: 25, textTransform: 'capitalize' }}
+        >
           {item.value}
         </Button>
       )
@@ -79,7 +83,11 @@ const columns: GridColDef[] = [
     headerName: 'Allocate',
     width: 120,
     renderCell: item => (
-      <Button size="small" variant="outlined">
+      <Button
+        size="small"
+        variant="contained"
+        sx={{ borderRadius: 25, textTransform: 'capitalize' }}
+      >
         {item.value}
       </Button>
     )
@@ -93,6 +101,7 @@ const MoonPartyTable = ({ rows, isFetching }: { rows: any[]; isFetching: boolean
       rows={rows}
       columns={columns}
       autoPageSize
+      hideFooter
       // checkboxSelection
       disableRowSelectionOnClick
       components={
