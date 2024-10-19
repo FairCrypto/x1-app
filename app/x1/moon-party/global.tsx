@@ -50,7 +50,14 @@ const Global = () => {
       <Grid container direction="row">
         <Grid item xs={3}>
           <Box style={{ paddingLeft: '1rem' }}>
-            <Image src="/moon.gif" alt="moon" width={100} height={100} />
+            <Image
+              src="/moon.gif"
+              alt="moon"
+              width={100}
+              height={100}
+              unoptimized
+              unselectable="on"
+            />
           </Box>
         </Grid>
         {/* <Grid item xs={2} sx={{ display: 'flex', alignItems: 'center' }}>
