@@ -6,7 +6,7 @@ import State from '@/app/x1/moon-party/state';
 const Page = async () => (
   <Box
     sx={{
-      minHeight: '80vh',
+      // minHeight: '80vh',
       // display: 'flex',
       alignItems: 'top',
       justifyContent: 'left',

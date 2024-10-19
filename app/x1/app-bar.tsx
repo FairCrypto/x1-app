@@ -13,7 +13,7 @@ import { ThemeContext } from '@/contexts/Theme';
 import Alerts from '../alerts';
 
 const ApplicationBar = () => {
-  const { mode, setMode } = useContext(ThemeContext);
+  const { mode, setMode, isLarge } = useContext(ThemeContext);
   // const router = useRouter();
   const path = usePathname();
 
@@ -62,18 +62,20 @@ const ApplicationBar = () => {
       <Toolbar sx={{}}>
         <Stack direction="row" sx={{ flexGrow: 1, alignItems: 'center' }}>
           <Image src="/x1-logo.png" alt="X1 Logo" width={40} height={40} />
-          <Typography
-            sx={{
-              // width: '20%',
-              margin: '0 ',
-              marginLeft: 1,
-              fontWeight: 'bold',
-              color: 'text.primary'
-            }}
-            variant="h5"
-          >
-            Moon Party
-          </Typography>
+          {isLarge && (
+            <Typography
+              sx={{
+                // width: '20%',
+                margin: '0 ',
+                marginLeft: 1,
+                fontWeight: 'bold',
+                color: 'text.primary'
+              }}
+              variant="h5"
+            >
+              Moon Party
+            </Typography>
+          )}
         </Stack>
         <Tooltip title="Toggle light/dark mode">
           <IconButton sx={{ ml: 1 }} onClick={toggleTheme} color="inherit">

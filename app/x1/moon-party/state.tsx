@@ -156,7 +156,7 @@ const State = () => {
   ]);
 
   const aggregatedBurned = Object.values(xenfts).reduce(
-    (acc, { burned }) => acc + BigInt(burned),
+    (acc, { burned = 0 }) => acc + BigInt(burned),
     0n
   );
 

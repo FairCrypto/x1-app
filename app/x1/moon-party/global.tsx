@@ -12,7 +12,6 @@ const StyledBox = styled(Box)`
   background-color: ${({ theme }) => (theme.palette.mode === 'dark' ? '#131419' : '#e9e9e9')};
   border-radius: 12px;
   display: flex;
-  height: 20vh;
   flex-direction: row;
   justify-content: start;
   align-items: center;
@@ -48,7 +47,7 @@ const Global = () => {
   return (
     <StyledBox>
       <Grid container direction="row">
-        <Grid item xs={3}>
+        <Grid item xs={3} sm={6} lg={2}>
           <Box style={{ paddingLeft: '1rem' }}>
             <Image
               src="/moon.gif"
@@ -60,17 +59,7 @@ const Global = () => {
             />
           </Box>
         </Grid>
-        {/* <Grid item xs={2} sx={{ display: 'flex', alignItems: 'center' }}>
-          <StyledStack direction="column" spacing={2}>
-            <Typography variant="body2" align="left">
-              Current Cycle
-            </Typography>
-            <StyledNumber variant="h5" align="left">
-              8 / 256
-            </StyledNumber>
-          </StyledStack>
-        </Grid> */}
-        <Grid item xs={2} sx={{ display: 'flex', alignItems: 'center' }}>
+        <Grid item xs={12} sm={6} lg={2} sx={{ display: 'flex', alignItems: 'center' }}>
           <StyledStack direction="column" spacing={2}>
             <Typography variant="body2" align="left">
               Time Remaining
@@ -80,23 +69,35 @@ const Global = () => {
             </StyledNumber>
           </StyledStack>
         </Grid>
-        <Grid item xs={2} sx={{ display: 'flex', alignItems: 'center' }}>
+        <Grid item xs={12} sm={6} lg={2} sx={{ display: 'flex', alignItems: 'center' }}>
           <StyledStack direction="column" spacing={2}>
             <Typography variant="body2" align="left">
               XNT Distribution
             </Typography>
             <StyledNumber variant="h5" align="left">
-              <CountUp end={formatBigInt(xntDistribution)} delay={0} duration={1.5} />
+              <CountUp
+                end={formatBigInt(xntDistribution)}
+                delay={0}
+                duration={1.5}
+                useEasing
+                useGrouping
+              />
             </StyledNumber>
           </StyledStack>
         </Grid>
-        <Grid item xs={2} sx={{ display: 'flex', alignItems: 'center' }}>
+        <Grid item xs={12} sm={6} lg={2} sx={{ display: 'flex', alignItems: 'center' }}>
           <StyledStack direction="column" spacing={2}>
             <Typography variant="body2" align="left">
               Burn Points Allocated
             </Typography>
             <StyledNumber variant="h5" align="left">
-              <CountUp end={formatBigInt(burnPointsAllocated)} delay={0} duration={1.5} />
+              <CountUp
+                end={formatBigInt(burnPointsAllocated)}
+                delay={0}
+                duration={1.5}
+                useEasing
+                useGrouping
+              />
             </StyledNumber>
           </StyledStack>
         </Grid>

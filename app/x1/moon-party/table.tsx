@@ -104,7 +104,7 @@ const MoonPartyTable = ({
   isFetching: boolean;
   mode: string;
 }) => (
-  <div style={{ height: '50vh', width: '100%!important' }}>
+  <div style={{ height: '300px', width: '100%!important' }}>
     <DataGrid
       rows={rows}
       columns={columns}

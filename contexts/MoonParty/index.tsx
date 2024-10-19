@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useState } from 'react';
 
 type TMoonPartyContext = {
   endTs?: number;
@@ -16,17 +16,6 @@ export const MoonPartyProvider = ({ children }) => {
     xntDistribution: 10_000_000n * BigInt('1000000000000000000'),
     burnPointsAllocated: 3000_000n * BigInt('1000000000000000000')
   });
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setState({
-        ...state,
-        xntDistribution: state.xntDistribution! * 2n
-      });
-    }, 1_000);
-
-    return () => clearInterval(interval);
-  }, []);
 
   return <MoonPartyContext.Provider value={state}>{children}</MoonPartyContext.Provider>;
 };
