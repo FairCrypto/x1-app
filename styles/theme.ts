@@ -92,6 +92,9 @@ export const overrides = (mode: string) =>
             main: '#3070F6',
             contrastText: '#fff'
           },
+          background: {
+            // default: '#131419'
+          },
           action: {
             background: '#3070F6'
           }
@@ -125,7 +128,18 @@ export const overrides = (mode: string) =>
             styleOverrides: {
               root: {
                 fontFamily: ['Courier'],
-                border: 'none'
+                border: 'none',
+                outline: 'none',
+                backgroundColor: '#131419'
+              },
+              header: {
+                border: 'none',
+                outline: 'none',
+                backgroundColor: '#131419'
+              },
+              cell: {
+                border: 'none',
+                outline: 'none'
               }
             }
           }

@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { MoonPartyProvider } from '@/contexts/MoonParty';
 import { VmpxProvider } from '@/contexts/VMPX';
 import { XenCryptoProvider } from '@/contexts/XenCrypto';
 import { XenTorrentProvider } from '@/contexts/XenTorrent';
@@ -9,7 +10,9 @@ const MoonPartyLayout = ({ children }: { children: React.ReactNode }) => (
   <XenCryptoProvider>
     <XenTorrentProvider>
       <VmpxProvider>
-        <XoneProvider>{children}</XoneProvider>
+        <XoneProvider>
+          <MoonPartyProvider>{children}</MoonPartyProvider>
+        </XoneProvider>
       </VmpxProvider>
     </XenTorrentProvider>
   </XenCryptoProvider>

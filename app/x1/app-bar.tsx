@@ -5,8 +5,8 @@ import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { AppBar, IconButton, Stack, Toolbar, Tooltip, Typography } from '@mui/material';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import Image from 'next/image';
-import { usePathname, useRouter } from 'next/navigation';
-import React, { useContext, useState } from 'react';
+import { usePathname } from 'next/navigation';
+import React, { useContext } from 'react';
 
 import { ThemeContext } from '@/contexts/Theme';
 
@@ -14,8 +14,10 @@ import Alerts from '../alerts';
 
 const ApplicationBar = () => {
   const { mode, setMode } = useContext(ThemeContext);
-  const router = useRouter();
+  // const router = useRouter();
   const path = usePathname();
+
+  /*
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [projectEl, setProjectEl] = useState<null | HTMLElement>(null);
   const [expanded, setExpanded] = useState('');
@@ -36,13 +38,6 @@ const ApplicationBar = () => {
       }
   };
 
-  const toggleTheme = () => {
-    setMode(mode === 'dark' ? 'light' : 'dark');
-    if (typeof window !== 'undefined') {
-      window.localStorage.setItem('theme', mode === 'dark' ? 'light' : 'dark');
-    }
-  };
-
   const handleChange = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
     event.stopPropagation();
     if (newExpanded) {
@@ -51,6 +46,15 @@ const ApplicationBar = () => {
   };
 
   const isHomePage = path === '/';
+
+   */
+
+  const toggleTheme = () => {
+    setMode(mode === 'dark' ? 'light' : 'dark');
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem('theme', mode === 'dark' ? 'light' : 'dark');
+    }
+  };
 
   return (
     <AppBar position="fixed" elevation={0}>
@@ -63,7 +67,8 @@ const ApplicationBar = () => {
               // width: '20%',
               margin: '0 ',
               marginLeft: 1,
-              fontWeight: 'bold'
+              fontWeight: 'bold',
+              color: 'text.primary'
             }}
             variant="h5"
           >

@@ -45,6 +45,7 @@ const Subheader = () => {
             fontWeight: 'bold'
           }}
           variant="h5"
+          color="text.primary"
         >
           Moon Party
         </Typography>

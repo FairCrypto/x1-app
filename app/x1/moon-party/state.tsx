@@ -1,5 +1,7 @@
 'use client';
 
+import { Box } from '@mui/material';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useContext, useEffect, useState } from 'react';
 import { useAccount } from 'wagmi';
 
@@ -43,7 +45,7 @@ type TokenInfo = {
 };
 
 const State = () => {
-  const { safeRows: perPage } = useContext(ThemeContext);
+  const { safeRows: perPage, mode } = useContext(ThemeContext);
   const { global: xen, user: xenUser, isFetching: isFetchingXen } = useContext(XenCryptoContext);
   const {
     global: torrent,
@@ -225,7 +227,18 @@ const State = () => {
       }))
   ].filter(({ contract }) => currentNetwork?.[contract]);
 
-  return <MoonPartyTable rows={rows} isFetching={isFetching} />;
+  return (
+    <>
+      {!chain && (
+        <Box
+          sx={{ height: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+        >
+          <ConnectButton />
+        </Box>
+      )}
+      {chain && <MoonPartyTable rows={rows} isFetching={isFetching} mode={mode} />}
+    </>
+  );
 };
 
 export default State;

@@ -95,8 +95,16 @@ const columns: GridColDef[] = [
   { field: 'allocated', headerName: 'Allocated', width: 100 }
 ];
 
-const MoonPartyTable = ({ rows, isFetching }: { rows: any[]; isFetching: boolean }) => (
-  <div style={{ height: '60vh', width: '100%!important' }}>
+const MoonPartyTable = ({
+  rows,
+  isFetching,
+  mode
+}: {
+  rows: any[];
+  isFetching: boolean;
+  mode: string;
+}) => (
+  <div style={{ height: '50vh', width: '100%!important' }}>
     <DataGrid
       rows={rows}
       columns={columns}
@@ -121,6 +129,16 @@ const MoonPartyTable = ({ rows, isFetching }: { rows: any[]; isFetching: boolean
       initialState={{
         sorting: {
           // sortModel: [{ field: 'maturityTs', sort: 'desc' }],
+        }
+      }}
+      sx={{
+        '& .MuiDataGrid-cell:focus': {
+          outline: 'none'
+        },
+        '& .MuiDataGrid-columnHeaders': {
+          outline: 'none',
+          borderBottom: 'none',
+          backgroundColor: mode === 'dark' ? '#1A1D21' : undefined
         }
       }}
     />
