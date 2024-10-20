@@ -56,6 +56,7 @@ export type TNetworkConfig = {
   xHexAddress?: string | number | null;
   xoneAddress?: string | number | null;
   vmpxAddress?: string | number | null;
+  moonPartyAddress?: string | number | null;
   xenftMessage?: string | null;
   allowedOps?: ContractOps[] | null;
   xenTorrentGenesisBlock?: number | bigint | string | null;
@@ -109,6 +110,7 @@ const addresses = (config: NextConfig = {}, networkId: string = 'mainnet') => ({
   xHexAddress: config.xHexAddress[networkId],
   xoneAddress: config.xoneAddress[networkId],
   vmpxAddress: config.vmpxAddress[networkId],
+  moonPartyAddress: config.moonPartyAddress[networkId],
   xenTorrentGenesisBlock: xenTorrentGenesisBlocks[networkId]
 });
 
@@ -374,8 +376,8 @@ const networkConfigs = ({ config = {} }: NextConfig): Record<string, TNetworkCon
     networkId: 'holesky',
     name: 'Holesky Testnet',
     currencyUnit: 'ETH',
-    wsURL: arrayOrString(config.wsUrlOverrides.sepolia),
-    rpcURL: arrayOrString(config.rpcUrlOverrides.sepolia),
+    wsURL: arrayOrString(config.wsUrlOverrides.holesky),
+    rpcURL: arrayOrString(config.rpcUrlOverrides.holesky),
     explorerUrl: 'https://holesky.etherscan.io/',
     logoUrl: '/logos/ethereum-logo.png',
     ...addresses(config, 'holesky')

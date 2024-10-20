@@ -15,6 +15,7 @@ import dxnToken from '../public/abi/DBXenERC20.json';
 import dbXenViews from '../public/abi/DBXenViews.json';
 import fenix from '../public/abi/Fenix.json';
 import hexABI from '../public/abi/HEX.json';
+import moonParty from '../public/abi/MoonParty.json';
 import vmpx from '../public/abi/VMPX.json';
 import xenlonMars from '../public/abi/XenlonMars.json';
 import xlonToken from '../public/abi/XenlonMarsERC20.json';
@@ -77,6 +78,7 @@ export type TPublicRuntimeConfig = {
   hexABI: Abi;
   vmpxABI: Abi;
   xoneABI: Abi;
+  moonPartyABI: Abi;
   defaultMarketplaceApiUrl: string;
   marketplaceApiUrl: Record<string, string>;
   defaultMarketplaceAssetUrl: string;
@@ -151,6 +153,7 @@ export const publicRuntimeConfig = {
   hexABI: hexABI as Abi,
   vmpxABI: vmpx.abi as Abi,
   xoneABI: xone.abi as Abi,
+  moonPartyABI: moonParty.abi as Abi,
   defaultMarketplaceApiUrl: process.env.OPENSEA_API_URL,
   marketplaceApiUrl: (process.env.SUPPORTED_CHAINS || 'mainnet')
     .split(',')

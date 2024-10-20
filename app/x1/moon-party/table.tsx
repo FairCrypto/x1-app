@@ -5,6 +5,10 @@ import { Button } from '@mui/material';
 import { DataGrid, type GridColDef } from '@mui/x-data-grid';
 import React from 'react';
 
+import { BurnXenDialog } from '@/app/x1/moon-party/burn-xen';
+import { BurnXenftDialog } from '@/app/x1/moon-party/burn-xenft';
+import type { IRow } from '@/app/x1/moon-party/state';
+
 const wei = 1_000_000_000_000_000_000n;
 const fmtBigInt = (v: bigint | null | undefined) => (BigInt(v ?? 0n) / wei).toLocaleString();
 
@@ -59,11 +63,12 @@ const columns: GridColDef[] = [
     renderCell: item =>
       item.value && (
         <Button
+          onClick={item.value?.handler || (() => {})}
           size="small"
           variant="contained"
           sx={{ borderRadius: 25, textTransform: 'capitalize' }}
         >
-          {item.value}
+          {item.value?.label || 'Burn'}
         </Button>
       )
   },
@@ -100,49 +105,72 @@ const MoonPartyTable = ({
   isFetching,
   mode
 }: {
-  rows: any[];
+  rows: IRow[];
   isFetching: boolean;
   mode: string;
-}) => (
-  <div style={{ height: '300px', width: '100%!important' }}>
-    <DataGrid
-      rows={rows}
-      columns={columns}
-      autoPageSize
-      hideFooter
-      // checkboxSelection
-      disableRowSelectionOnClick
-      components={
-        {
-          // Footer: CustomFooterTotalComponent
-          // NoRowsOverlay: CustomNoRowsComponent
-        }
-      }
-      componentsProps={
-        {
-          // footer: { totalBurned },
-          // noRowsOverlay: { noRowsLabel }
-        }
-      }
-      // onStateChange={onStateChange}
-      loading={isFetching}
-      initialState={{
-        sorting: {
-          // sortModel: [{ field: 'maturityTs', sort: 'desc' }],
-        }
-      }}
-      sx={{
-        '& .MuiDataGrid-cell:focus': {
-          outline: 'none'
-        },
-        '& .MuiDataGrid-columnHeaders': {
-          outline: 'none',
-          borderBottom: 'none',
-          backgroundColor: mode === 'dark' ? '#1A1D21' : undefined
-        }
-      }}
-    />
-  </div>
-);
+}) => {
+  const [open, setOpen] = React.useState(false);
+  const [row, setRow] = React.useState<IRow>();
+  return (
+    <>
+      {row?.id === 'XEN Crypto' && (
+        <BurnXenDialog open={open} onClose={() => setOpen(false)} row={row} />
+      )}
+      {row?.id?.endsWith('XENFT') && (
+        <BurnXenftDialog open={open} onClose={() => setOpen(false)} row={row} />
+      )}
+      <div style={{ height: '300px', width: '100%!important' }}>
+        <DataGrid
+          rows={rows.map((row, i) => ({
+            ...row,
+            burn_cta: row.burn_cta
+              ? {
+                  handler: () => {
+                    setOpen(true);
+                    setRow(row);
+                  },
+                  label: row.burn_cta
+                }
+              : undefined
+          }))}
+          columns={columns}
+          autoPageSize
+          hideFooter
+          // checkboxSelection
+          disableRowSelectionOnClick
+          components={
+            {
+              // Footer: CustomFooterTotalComponent
+              // NoRowsOverlay: CustomNoRowsComponent
+            }
+          }
+          componentsProps={
+            {
+              // footer: { totalBurned },
+              // noRowsOverlay: { noRowsLabel }
+            }
+          }
+          // onStateChange={onStateChange}
+          loading={isFetching}
+          initialState={{
+            sorting: {
+              // sortModel: [{ field: 'maturityTs', sort: 'desc' }],
+            }
+          }}
+          sx={{
+            '& .MuiDataGrid-cell:focus': {
+              outline: 'none'
+            },
+            '& .MuiDataGrid-columnHeaders': {
+              outline: 'none',
+              borderBottom: 'none',
+              backgroundColor: mode === 'dark' ? '#1A1D21' : undefined
+            }
+          }}
+        />
+      </div>
+    </>
+  );
+};
 
 export default MoonPartyTable;

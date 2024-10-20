@@ -14,6 +14,23 @@ import { XenCryptoContext } from '@/contexts/XenCrypto';
 import { XenTorrentContext } from '@/contexts/XenTorrent';
 import { XoneContext } from '@/contexts/XONE';
 
+export interface IRow {
+  contract: string;
+  id: string;
+  acquire: {
+    buy: string;
+    mint?: string;
+  };
+  balance: bigint;
+  burn_cta: string | { label: string; handler: () => void } | undefined;
+  burned: bigint | number;
+  used_burns: string;
+  avail_burns: string;
+  burn_points: string;
+  allocate_cta: string;
+  allocated: string;
+}
+
 const XenftClasses = [
   {
     name: 'Collector'
@@ -160,7 +177,7 @@ const State = () => {
     0n
   );
 
-  const rows = [
+  const rows: IRow[] = [
     {
       contract: 'contractAddress',
       id: 'XEN Crypto',
@@ -217,7 +234,7 @@ const State = () => {
           mint: `https://xen.network/${networkId}/mint`
         },
         balance: BigInt(tokens.length) * 10n ** 18n,
-        burn_cta: undefined,
+        burn_cta: 'Burn',
         burned,
         used_burns: '0',
         avail_burns: '0',

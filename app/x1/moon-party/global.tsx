@@ -5,6 +5,7 @@ import { formatDistanceStrict } from 'date-fns';
 import Image from 'next/image';
 import { useContext } from 'react';
 import CountUp from 'react-countup';
+import { useAccount } from 'wagmi';
 
 import { MoonPartyContext } from '@/contexts/MoonParty';
 
@@ -43,7 +44,12 @@ const formatBigInt = (value: bigint | undefined) =>
   Number((value || 0n) / BigInt('1000000000000000000'));
 
 const Global = () => {
-  const { endTs, xntDistribution, burnPointsAllocated } = useContext(MoonPartyContext);
+  const { address, chain } = useAccount();
+  const { global, user } = useContext(MoonPartyContext);
+  const endOfParty = global[chain?.id as number]?.endOfParty || BigInt(Date.now());
+  const totalBurnPoints = global[chain?.id as number]?.totalBurnPoints || 0n;
+  const totalAllocateXNTCredits = global[chain?.id as number]?.totalAllocateXNTCredits || 0n;
+
   return (
     <StyledBox>
       <Grid container direction="row">
@@ -65,7 +71,9 @@ const Global = () => {
               Time Remaining
             </Typography>
             <StyledNumber variant="h5" align="left">
-              {formatDistanceStrict(new Date(), new Date(endTs || Date.now()), { unit: 'day' })}
+              {formatDistanceStrict(new Date(), new Date(Number(endOfParty?.toString())), {
+                unit: 'day'
+              })}
             </StyledNumber>
           </StyledStack>
         </Grid>
@@ -76,7 +84,7 @@ const Global = () => {
             </Typography>
             <StyledNumber variant="h5" align="left">
               <CountUp
-                end={formatBigInt(xntDistribution)}
+                end={formatBigInt(totalBurnPoints)}
                 delay={0}
                 duration={1.5}
                 useEasing
@@ -92,7 +100,7 @@ const Global = () => {
             </Typography>
             <StyledNumber variant="h5" align="left">
               <CountUp
-                end={formatBigInt(burnPointsAllocated)}
+                end={formatBigInt(totalAllocateXNTCredits)}
                 delay={0}
                 duration={1.5}
                 useEasing

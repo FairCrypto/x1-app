@@ -41,6 +41,7 @@ export const Web3Provider = ({
 }) => {
   const { rkTheme } = useTheme();
 
+  console.log('publicRuntimeConfig', publicRuntimeConfig);
   const { isTestnet } = publicRuntimeConfig;
   const supportedNetworks = networks({ config: publicRuntimeConfig });
   const supportedChainIds = Object.values(supportedNetworks)
